@@ -44,27 +44,27 @@ const Cart = ({cartItems,loadCartitems,loadOrders,username}) => {
     }
 
   return (
-    <div>
-        <div className='container-fluid p-2 bg-success text-light text-center'><p className='fs-2 fw-light'>Your Cart <i class="fa fa-shopping-cart"></i></p></div>
+    <div className='container-fluid p-3'>
+        <span className='fs-4 fw-light badge accent1-bg rounded-0'><i class="fa fa-shopping-cart"></i> My Cart:</span>
         <div className='d-flex justify-content-center'>
-            <table className='table border shadow mt-5' style={{width:"80%"}}>
+            <table className='table border shadow mt-1 text-center'>
                 <thead>
-                    <tr>
-                        <th className="fs-4 fw-normal">Product ID</th>
-                        <th className="fs-4 fw-normal">Customer</th>
-                        <th className="fs-4 fw-normal">Name</th>
-                        <th className="fs-4 fw-normal">Price</th>
-                        <th className="fs-4 fw-normal">Image</th>
-                        <th className="fs-4 fw-normal">Quantity</th>
-                        <th className="fs-4 fw-normal">Sub Total</th>
-                        <th className="fs-4 fw-normal">Actions</th>
+                    <tr className='bg-secondary text-light'>
+                        <th className="fs-5 fw-light">Product ID</th>
+                        <th className="fs-5 fw-light">Customer</th>
+                        <th className="fs-5 fw-light">Name</th>
+                        <th className="fs-5 fw-light">Price</th>
+                        <th className="fs-5 fw-light">Image</th>
+                        <th className="fs-5 fw-light">Quantity</th>
+                        <th className="fs-5 fw-light">Sub Total</th>
+                        <th className="fs-5 fw-light">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                 {
                     cartItems.map((cartItem,index)=>
                         <tr>
-                            <th className="fs-6 fw-light">EC{cartItem.product.productId}</th>
+                            <th className="fs-6 fw-light">ECPD{cartItem.product.productId}</th>
                             <th className="fs-6 fw-light">{cartItem.user.name}</th>
                             <th className="fs-6 fw-light">{cartItem.product.productName}</th>
                             <th className="fs-6 fw-light">{cartItem.product.price} ₹ Only</th>
@@ -75,23 +75,24 @@ const Cart = ({cartItems,loadCartitems,loadOrders,username}) => {
                                 :<th className="fs-6 fw-light">{cartItem.quantity}</th>
                             }
                             
-                            <th className="fs-6 fw-light">{cartItem.quantity*cartItem.product.price}</th>
+                            <th className="fs-6 fw-light">{cartItem.quantity*cartItem.product.price} ₹ </th>
                             <th className="fs-6 fw-light">
                                 {
                                     editing && editIndx===index?
-                                    <button className='btn btn-success me-2' onClick={()=>{handleUpdatingCartItem(cartItem.cartItemId,currItemQuantity,userInfo);setEditing(false);}}>Update</button>
-                                    :<button className='btn btn-primary me-2' onClick={()=>{setEditing(true); setEditIndx(index)}}>Edit</button>
+                                    <button className='btn btn-success btn-sm rounded-0 me-1' onClick={()=>{handleUpdatingCartItem(cartItem.cartItemId,currItemQuantity,userInfo);setEditing(false);}}>Update</button>
+                                    :<button className='btn btn-primary btn-sm rounded-0 me-1' onClick={()=>{setEditing(true); setEditIndx(index)}}>Edit</button>
                                 }
                                 
-                                <button className='btn btn-danger' onClick={()=>{handleDeletingCartItem(cartItem.cartItemId,userInfo)}}>Delete</button>
+                                <button className='btn btn-danger btn-sm rounded-0' onClick={()=>{handleDeletingCartItem(cartItem.cartItemId,userInfo)}}>Delete</button>
                             </th>
                         </tr>
                     )
                 }
-                    <tr>
-                        <td colSpan="1"><button className='btn btn-secondary' onClick={()=>{clearCart(cartItems);loadCartitems()}}>Clear cart</button></td>
-                        <td colSpan="6" className='text-center fs-4 fw-bold text-danger'> GrandTotal: {grandTotal}₹</td>
-                        <td colSpan="1"><Link to="/order"><button className='btn btn-info text-light' onClick={()=>handleOrder(userInfo)}>Confirm Order</button></Link></td>
+
+                    <tr className='accent1-bg text-light'>
+                        <td colSpan="1"><button className='btn btn-light btn-sm rounded-0' onClick={()=>{clearCart(cartItems);loadCartitems()}}>Clear cart</button></td>
+                        <td colSpan="6" className='text-center fs-5 fw-normal'> GrandTotal: {grandTotal}₹</td>
+                        <td colSpan="1"><Link to="/order"><button className='btn btn-dark btn-sm rounded-0' style={{width:"7rem"}} onClick={()=>handleOrder(userInfo)}>Check Out</button></Link></td>
                     </tr>
                 </tbody>
             </table>

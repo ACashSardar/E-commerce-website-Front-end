@@ -85,28 +85,25 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
 
 
   return (
-    <div>
-      <div className="container-fluid" style={{maxWidth:"60rem"}}>
+      <div className="container-fluid p-0" style={{maxWidth:"85rem"}}>
+        
         { editing ? 
-            <form className="mx-auto mb-5 border p-3 mt-5 rounded shadow" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleUpdateProduct(e,editItemId,userInfo)}>
-              <p className='text-center text-primary fw-bold fs-3'>Edit Product</p><hr/>
+            <form className="mx-auto mb-5 border p-3 mt-5 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleUpdateProduct(e,editItemId,userInfo)}>
+              <label className='fs-3 fw-normal text-success'>EDIT PRODUCT</label>
+              <hr/>
               <div className="mb-1">
-                <input type="text" className="form-control" name="productName" placeholder='Enter Product Name' value={productName} onChange={(e)=>setProductName(e.target.value)} required/>
+                <input type="text" className="form-control rounded-0" name="productName" placeholder='Enter Product Name' value={productName} onChange={(e)=>setProductName(e.target.value)} required/>
               </div>
               <div className="mb-1">
-                <input type="text" className="form-control" name="productDesc" placeholder='Enter Product Description' value={productDesc} onChange={(e)=>setProductDesc(e.target.value)} required/>
-              </div>
-              <div className="mb-1 d-flex justify-content-around">
-                <span>Product Price</span>
-                <span>In stock</span>
+                <input type="text" className="form-control rounded-0" name="productDesc" placeholder='Enter Product Description' value={productDesc} onChange={(e)=>setProductDesc(e.target.value)} required/>
               </div>
               <div className="mb-1 d-flex">
-                <input type="text" className="form-control me-1" name="price" placeholder='Enter Product Price' value={price} onChange={(e)=>setPrice(e.target.value)} required/>
-                <input type="text" className="form-control" name="stock" placeholder='Enter number of products in the stock' value={stock} onChange={(e)=>setStock(e.target.value)} required/>
+                <input type="text" className="form-control rounded-0 me-1" name="price" placeholder='Enter Product Price' value={price===0?"":price} onChange={(e)=>setPrice(e.target.value)} required/>
+                <input type="text" className="form-control rounded-0" name="stock" placeholder='Enter number of products in the stock' value={stock===0?"":stock} onChange={(e)=>setStock(e.target.value)} required/>
               </div>
               <img class="mb-1 rounded-1" src={`http://localhost:8080/api/v1/products/image/${imageURL}`} alt="" style={{width:"100%"}}/>
               <div className="mb-1 d-flex">
-                <select class="form-select me-1" aria-label="Default select example" value={categoryId} onChange={(e)=>setCategoryId(e.target.value)}>
+                <select class="form-select rounded-0 me-1" aria-label="Default select example" value={categoryId} onChange={(e)=>setCategoryId(e.target.value)}>
                   <option selected>Choose a category</option>
                   {
                     categories.map((cat) => (
@@ -115,7 +112,7 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
                   }
                 </select>
 
-                <select class="form-select" aria-label="Default select example" value={supplierId} onChange={(e)=>setSupplierId(e.target.value)}>
+                <select class="form-select rounded-0" aria-label="Default select example" value={supplierId} onChange={(e)=>setSupplierId(e.target.value)}>
                   <option selected>Choose a supplier</option>
                   {
                     suppliers.map((sup) => (
@@ -124,31 +121,28 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
                   }
                 </select>
               </div>
-              <button type="submit" className="btn btn-primary" style={{width:"100%"}}>Update Product</button>
+              <button type="submit" className="custom-btn" style={{width:"100%"}}>Update Product</button>
             </form>           
           :
-            <form className="mx-auto mb-5 border p-3 mt-5 rounded shadow" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddProduct(e,userInfo)}>
-              <p className='text-center text-success fw-bold fs-3'>Add Product</p><hr/>
+            <form className="mx-auto mb-5 border p-3 mt-5 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddProduct(e,userInfo)}>
+              <label className='fs-3 fw-normal text-success'>ADD PRODUCT</label>
+              <hr/>
               <div className="mb-1">
-                <input type="text" className="form-control" name="productName" placeholder='Enter Product Name' value={productName} onChange={(e)=>setProductName(e.target.value)} required/>
+                <input type="text" className="form-control rounded-0" name="productName" placeholder='Enter Product Name' value={productName} onChange={(e)=>setProductName(e.target.value)} required/>
               </div>
               <div className="mb-1">
-                <input type="text" className="form-control" name="productDesc" placeholder='Enter Product Description' value={productDesc} onChange={(e)=>setProductDesc(e.target.value)} required/>
-              </div>
-              <div className="mb-1 d-flex justify-content-around">
-                <span>Product Price</span>
-                <span>In stock</span>
+                <input type="text" className="form-control rounded-0" name="productDesc" placeholder='Enter Product Description' value={productDesc} onChange={(e)=>setProductDesc(e.target.value)} required/>
               </div>
               <div className="mb-1 d-flex">
-                <input type="text" className="form-control me-1" name="price" placeholder='Price' value={price} onChange={(e)=>setPrice(e.target.value)} required/>
-                <input type="text" className="form-control" name="stock" placeholder='In stock' value={stock} onChange={(e)=>setStock(e.target.value)} required/>
+                <input type="text" className="form-control rounded-0 me-1" name="price" placeholder='Price' value={price===0?"":price} onChange={(e)=>setPrice(e.target.value)} required/>
+                <input type="text" className="form-control rounded-0" name="stock" placeholder='In stock' value={stock===0?"":stock} onChange={(e)=>setStock(e.target.value)} required/>
               </div>
               <img id="product-img" class="mb-1 rounded-1" src={dummyImageURL} alt="" style={{width:"100%"}} />
               <div className="mb-1">
-                <input type="file" className="form-control" accept="image/*" required onChange={(e)=>loadImage(e)}/>
+                <input type="file" className="form-control rounded-0" accept="image/*" required onChange={(e)=>loadImage(e)}/>
               </div>
               <div className="mb-1 d-flex">
-                <select class="form-select me-1" aria-label="Default select example" value={categoryId} onChange={(e)=>{setCategoryId(e.target.value)}}>
+                <select class="form-select rounded-0 me-1" aria-label="Default select example" value={categoryId} onChange={(e)=>{setCategoryId(e.target.value)}}>
                   <option selected>Choose a category</option>
                   {
                     categories.map((cat) => (
@@ -157,7 +151,7 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
                   }
                 </select>
 
-                <select class="form-select" aria-label="Default select example" value={supplierId} onChange={(e)=>setSupplierId(e.target.value)}>
+                <select class="form-select rounded-0" aria-label="Default select example" value={supplierId} onChange={(e)=>setSupplierId(e.target.value)}>
                   <option selected>Choose a supplier</option>
                   {
                     suppliers.map((sup) => (
@@ -166,21 +160,24 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
                   }
                 </select>
               </div>
-              <button type="submit" className="btn btn-success" style={{width:"100%"}}>Add Product</button>
+              <button type="submit" className="custom-btn">Add Product</button>
             </form>
         }
-        <p className='text-center text-dark fw-bold fs-3'>List of Products</p>
-        <div className="row">
-            <table className='table table-striped border shadow'>
+        <div className='mb-1'>
+          <span className='fw-light fs-4 accent1-bg badge rounded-0 mx-auto'><i class="fa fa-shopping-bag"></i> List of Products :</span>
+        </div>
+        <div className="row mx-0">
+            <table className='table table-hover border' >
                 <thead>
-                    <tr>
-                        <th className="fs-4 fw-normal">Name</th>
-                        <th className="fs-4 fw-normal">Description</th>
-                        <th className="fs-4 fw-normal">Price</th>
-                        <th className="fs-4 fw-normal">Stock</th>
-                        <th className="fs-4 fw-normal">Image</th>
-                        <th className="fs-4 fw-normal">Supplier</th>
-                        <th className="fs-4 fw-normal">Actions</th>
+                    <tr className='accent1-bg text-light'>
+                        <th className="fs-5 fw-light">ProductID</th>
+                        <th className="fs-5 fw-light">Name</th>
+                        <th className="fs-5 fw-light">Description</th>
+                        <th className="fs-5 fw-light">Price</th>
+                        <th className="fs-5 fw-light">Stock</th>
+                        <th className="fs-5 fw-light">Image</th>
+                        <th className="fs-5 fw-light">Supplier</th>
+                        <th className="fs-5 fw-light">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -188,13 +185,14 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
                         products.map((product,index)=>
 
                         <tr key={product.productId}>
-                            <th className="fs-6 fw-light">{(index+1)+". "+product.productName}</th>
+                            <th className="fs-6 fw-light">ECPD{product.productId}</th>
+                            <th className="fs-6 fw-light">{product.productName}</th>
                             <th className="fs-6 fw-light">{product.productDesc}</th>
                             <th className="fs-6 fw-light">{product.price} ₹</th>
                             <th className="fs-6 fw-light">{product.stock}</th>
-                            <th className="fs-6 fw-light"><img src={`http://localhost:8080/api/v1/products/image/${product.imageURL}`} alt="" style={{width:"3rem"}}/></th>
+                            <th className="fs-6 fw-light"><img src={`http://localhost:8080/api/v1/products/image/${product.imageURL}`} alt="" style={{width:"3rem",height:"3rem"}}/></th>
                             <th className="fs-6 fw-light">{product.supplier.supplierName}</th>
-                            <th>
+                            <th className='d-flex'>
                               <button onClick={(e)=>{
                                   setEditing(true)
                                   setEditItemId(product.productId)
@@ -207,12 +205,12 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
                                   setSupplierId(product.supId)
                                   loadProducts()
                                 }
-                              } className='btn btn-primary btn-sm me-1'>Edit</button>
+                              } className='btn btn-primary rounded-0 me-1 my-2'>Edit</button>
                               
                               <button onClick={(e)=>{
                                 handleDeleteProduct(product.productId,userInfo)
                               }
-                            } className='btn btn-danger btn-sm'>Delete</button>
+                            } className='btn btn-danger rounded-0 my-2'>Delete</button>
                             </th>
                         </tr>
                         )
@@ -221,8 +219,6 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
             </table>
         </div>
       </div>
-    </div>
-
   )
 }
 

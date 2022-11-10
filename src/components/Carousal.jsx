@@ -17,7 +17,7 @@ const Carousal = () => {
                 </div>
                 </div>
                 <div className="carousel-item" style={{height:"80vh"}}>
-                <img src="https://png.pngtree.com/thumb_back/fw800/back_our/20190620/ourmid/pngtree-dark-street-double-eleven-global-carnival-e-commerce-banner-image_174101.jpg" className="d-block w-100" alt="..." style={{height:"80vh"}}/>
+                <img src="https://securecdn.pymnts.com/wp-content/uploads/2019/01/India-eCommerce-rules-us-goverment.jpg" className="d-block w-100" alt="..." style={{height:"80vh"}}/>
                 <div className="carousel-caption d-none d-md-block">
                     <p className='fs-1 fw-bold'>WINTER SALE IS HERE !!!!!</p>
                 </div>

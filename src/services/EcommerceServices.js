@@ -5,6 +5,7 @@ const SUPPLIER_BASE_URL = "http://localhost:8080/api/v1/suppliers";
 const PRODUCT_BASE_URL = "http://localhost:8080/api/v1/products";
 const CARTITEM_BASE_URL = "http://localhost:8080/api/v1/cartitems";
 const ORDER_BASE_URL = "http://localhost:8080/api/v1/orders";
+const USER_BASE_URL = "http://localhost:8080/api/v1/users";
 
 // Category API calls
 export const getCategories = (userInfo) => {
@@ -148,6 +149,13 @@ export const getOrdersByUser = (userInfo) => {
   });
 };
 
+export const getOrdersByDeliveryPerson = (userInfo) => {
+  console.log("get request made");
+  return axios.get(ORDER_BASE_URL + "/deliveryPerson/" + userInfo.username, {
+    auth: userInfo,
+  });
+};
+
 export const updateOrder = (data, orderId, userInfo) => {
   console.log("put request made");
   return axios.put(ORDER_BASE_URL + "/" + orderId, data, { auth: userInfo });
@@ -158,8 +166,42 @@ export const deleteOrder = (orderId, userInfo) => {
   return axios.delete(ORDER_BASE_URL + "/" + orderId, { auth: userInfo });
 };
 
-// login
-export const login = (data) => {
-  console.log("login request made to " + CARTITEM_BASE_URL);
-  return axios.get(CARTITEM_BASE_URL, data);
+// User API calls
+export const getUserByEmail = (userInfo) => {
+  console.log("get request made");
+  return axios.get(USER_BASE_URL + "/user/" + userInfo.username, {
+    auth: userInfo,
+  });
+};
+
+export const getUsers = (userInfo) => {
+  console.log("get request made");
+  return axios.get(USER_BASE_URL, {
+    auth: userInfo,
+  });
+};
+
+export const updateUser = (userId, data, userInfo) => {
+  console.log("put request made");
+  console.log(data);
+  return axios.put(USER_BASE_URL + "/" + userId, data, {
+    auth: userInfo,
+  });
+};
+
+export const assignDelivery = (orderId, deliveryPersonId, userInfo) => {
+  console.log("get request made");
+  return axios.get(
+    ORDER_BASE_URL + "/assign/" + orderId + "/delivery/" + deliveryPersonId,
+    {
+      auth: userInfo,
+    }
+  );
+};
+
+export const updateDelivery = (orderId, data, userInfo) => {
+  console.log("get request made");
+  return axios.put(ORDER_BASE_URL + "/update/" + orderId, data, {
+    auth: userInfo,
+  });
 };

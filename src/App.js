@@ -8,6 +8,10 @@ import {
   getProducts,
   getCartItemsByUser,
   getOrdersByUser,
+  getOrdersByDeliveryPerson,
+  getUserByEmail,
+  getOrders,
+  getUsers,
 } from "./services/EcommerceServices";
 import Footer from "./components/Footer";
 import ListSuppliers from "./components/ListSuppliers";
@@ -20,6 +24,7 @@ import ListOrders from "./components/ListOrders";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import axios from "axios";
+import Account from "./components/Account";
 
 const App = () => {
   const navigate = useNavigate();
@@ -30,8 +35,8 @@ const App = () => {
   const [quantity, setQuantity] = useState(1);
   const [cartItems, setCartItems] = useState([]);
   const [orders, setOrders] = useState([]);
-  const [userRole, setUserRole] = useState("ROLE_USER");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [userList, setUserList] = useState([]);
 
   const loadCategories = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -41,7 +46,6 @@ const App = () => {
     }
     getCategories(userInfo)
       .then((res) => {
-        console.log(res.data);
         setCategories(res.data);
       })
       .catch((err) => console.log(err));
@@ -55,7 +59,6 @@ const App = () => {
     }
     getSuppliers(userInfo)
       .then((res) => {
-        console.log(res.data);
         setSuppliers(res.data);
       })
       .catch((err) => console.log(err));
@@ -69,7 +72,6 @@ const App = () => {
     }
     getProducts(userInfo)
       .then((res) => {
-        console.log(res.data);
         setProducts(res.data);
       })
       .catch((err) => console.log(err));
@@ -83,7 +85,6 @@ const App = () => {
     }
     getCartItemsByUser(userInfo)
       .then((res) => {
-        console.log(res.data);
         setCartItems(res.data);
       })
       .catch((err) => console.log(err));
@@ -91,26 +92,54 @@ const App = () => {
 
   const loadOrders = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (userInfo == null) {
+    if (userInfo == null || currentUser == null) {
       setOrders([]);
       return;
     }
-    getOrdersByUser(userInfo)
+
+    let promise = null;
+    if (currentUser.role === "ROLE_ADMIN") {
+      promise = getOrders(userInfo);
+    } else if (currentUser.role === "ROLE_USER") {
+      promise = getOrdersByUser(userInfo);
+    } else if (currentUser.role === "ROLE_DELIVERY") {
+      promise = getOrdersByDeliveryPerson(userInfo);
+    }
+
+    promise
       .then((res) => {
-        console.log(res.data);
         setOrders(res.data);
       })
       .catch((err) => console.log(err));
   };
 
+  const loadCurrentUser = () => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo != null)
+      getUserByEmail(userInfo).then((res) => {
+        setCurrentUser(res.data);
+      });
+  };
+
+  const loadUserList = () => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    getUsers(userInfo).then((res) => {
+      setUserList(res.data);
+    });
+  };
   useEffect(() => {
+    loadCurrentUser();
+  }, []);
+
+  useEffect(() => {
+    console.log(currentUser);
+    loadUserList();
     loadCategories();
     loadSuppliers();
     loadProducts();
     loadCartitems();
     loadOrders();
-    console.log("yo bro wtf");
-  }, [loggedIn, selectedProductId]);
+  }, [currentUser, selectedProductId]);
 
   const signup = (e) => {
     e.preventDefault();
@@ -118,6 +147,7 @@ const App = () => {
     const password = e.target.elements.password.value;
     const name = e.target.elements.name.value;
     const address = e.target.elements.address.value;
+    const phoneNo = e.target.elements.phoneNo.value;
     const role = e.target.elements.role.value;
 
     console.log(name, email, password, address, role);
@@ -127,6 +157,7 @@ const App = () => {
         email,
         password,
         address,
+        phoneNo,
         role,
       })
       .then((res) => {
@@ -155,9 +186,9 @@ const App = () => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          console.log("login success");
+          console.log(currentUser);
           localStorage.setItem("userInfo", JSON.stringify(credential));
-          setLoggedIn(true);
+          loadCurrentUser();
           navigate("/");
         }
       })
@@ -168,15 +199,14 @@ const App = () => {
 
   const logout = () => {
     localStorage.clear();
-    setLoggedIn(false);
-    setUserRole("ROLE_USER");
     setSelectedProductId(0);
+    setCurrentUser(null);
     navigate("/login");
   };
 
   return (
     <div className="container-fluid m-0 p-0">
-      <Header logout={logout} userRole={userRole} />
+      <Header logout={logout} loadCurrentUser={loadCurrentUser} />
       <Routes>
         <Route
           exact
@@ -190,6 +220,7 @@ const App = () => {
               setSelectedProductId={setSelectedProductId}
               quantity={quantity}
               setQuantity={setQuantity}
+              cartItems={cartItems}
               loadCartitems={loadCartitems}
             />
           }
@@ -251,7 +282,13 @@ const App = () => {
         <Route
           exact
           path="/order"
-          element={<Order orders={orders} loadOrders={loadOrders} />}
+          element={
+            <Order
+              orders={orders}
+              loadOrders={loadOrders}
+              currentUser={currentUser}
+            />
+          }
         />
         <Route
           exact
@@ -261,7 +298,24 @@ const App = () => {
         <Route
           exact
           path="/customerOrders"
-          element={<ListOrders cartItems={cartItems} orders={orders} />}
+          element={
+            <ListOrders
+              cartItems={cartItems}
+              orders={orders}
+              loadOrders={loadOrders}
+              userList={userList}
+            />
+          }
+        />
+        <Route
+          exact
+          path="/account"
+          element={
+            <Account
+              currentUser={currentUser}
+              loadCurrentUser={loadCurrentUser}
+            />
+          }
         />
       </Routes>
       <Footer />
