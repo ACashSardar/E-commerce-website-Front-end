@@ -72,10 +72,10 @@ const ListSuppliers = ({suppliers,loadSuppliers }) => {
   
   return (
     <div>
-        <div className="container-fluid p-0" style={{maxWidth:"85rem"}}>
+        <div className="bg-canvas p-5">
             { edting ? 
-                <form className="mx-auto mb-5 border p-3 mt-5 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleUpdateSupplier(e,editItemId,userInfo)}>
-                  <label className='fs-3 fw-normal text-success'>EDIT SUPPLIER</label>
+                <form className="mx-auto mb-5 border p-3 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleUpdateSupplier(e,editItemId,userInfo)}>
+                  <label className='fs-3 fw-bold text-dark'>EDIT SUPPLIER</label>
                   <hr/>
                   <div className="mb-1">
                       <input type="text" className="form-control rounded-0" name="supplierName" placeholder='Enter Supplier Name' value={supplierName} onChange={(e)=>setSupplierName(e.target.value)} required/>
@@ -92,8 +92,8 @@ const ListSuppliers = ({suppliers,loadSuppliers }) => {
                   <button type="submit" className="custom-btn" style={{width:"100%"}}>Update Supplier</button>
                 </form>           
             :
-                <form className="mx-auto mb-5 border p-3 mt-5 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddSupplier(e,userInfo)}>
-                  <label className='fs-3 fw-normal text-success'>ADD SUPPLIER</label>
+                <form className="mx-auto mb-5 border p-3 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddSupplier(e,userInfo)}>
+                  <label className='fs-3 fw-bold text-dark'>ADD SUPPLIER</label>
                   <hr/>
                   <div className="mb-1">
                       <input type="text" className="form-control rounded-0" name="supplierName" placeholder='Enter Supplier Name' value={supplierName} onChange={(e)=>setSupplierName(e.target.value)} required/>
@@ -111,18 +111,15 @@ const ListSuppliers = ({suppliers,loadSuppliers }) => {
                 </form>
             }
 
-            <div className='mb-1'>
-              <span className='fw-light fs-4 accent1-bg badge rounded-0 mx-auto'><i class="fa fa-shopping-bag"></i> List of Supplier :</span>
-            </div>
             <div className="row mx-0">
                 <table className='table table-hover border'>
                     <thead>
-                        <tr className='accent1-bg text-light'>
-                            <th className="fs-5 fw-light">Supplier Name</th>
-                            <th className="fs-5 fw-light">Phone Number</th>
-                            <th className="fs-5 fw-light">Description</th>
-                            <th className="fs-5 fw-light">Address</th>
-                            <th className="fs-5 fw-light">Actions</th>
+                        <tr className='bg-light'>
+                            <th className="fs-6 fw-bold">Supplier Name</th>
+                            <th className="fs-6 fw-bold">Phone Number</th>
+                            <th className="fs-6 fw-bold">Description</th>
+                            <th className="fs-6 fw-bold">Address</th>
+                            <th className="fs-6 fw-bold">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,13 +141,13 @@ const ListSuppliers = ({suppliers,loadSuppliers }) => {
                                     setDescription(supplier.description)
                                     loadSuppliers()
                                     }
-                                } className='btn btn-primary rounded-0 me-1'>Edit</button>
+                                } className='btn btn-primary btn-sm fw-bold rounded-0 me-1'>Edit</button>
                                 
 
                                 <button onClick={(e)=>{
                                     handleDeleteSupplier(supplier.supplierId,userInfo)
                                 }
-                                } className='btn btn-danger rounded-0'>Delete</button>
+                                } className='btn btn-danger btn-sm fw-bold rounded-0'>Delete</button>
                                 </th>
                             </tr>
                             )

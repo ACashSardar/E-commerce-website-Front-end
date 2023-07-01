@@ -35,14 +35,27 @@ const App = () => {
   const [quantity, setQuantity] = useState(1);
   const [cartItems, setCartItems] = useState([]);
   const [orders, setOrders] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [message, setMessage] = useState("");
+  const [currentUser, setCurrentUser] = useState({
+    userId: "",
+    name: "",
+    email: "",
+    role: "",
+    phoneNo: "",
+    password: "",
+    address: "",
+  });
   const [userList, setUserList] = useState([]);
+  const [currentOrder, setCurrentOrder] = useState();
+  const [loading, setLoading] = useState(false);
+  const [keyword, setKeyword] = useState("");
 
   const loadCategories = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo == null) {
-      setCategories([]);
-      return;
+      // setCategories([]);
+      // return;
     }
     getCategories(userInfo)
       .then((res) => {
@@ -65,14 +78,16 @@ const App = () => {
   };
 
   const loadProducts = () => {
+    setLoading(true);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo == null) {
-      setProducts([]);
-      return;
+      // setProducts([]);
+      // return;
     }
     getProducts(userInfo)
       .then((res) => {
         setProducts(res.data);
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   };
@@ -91,8 +106,9 @@ const App = () => {
   };
 
   const loadOrders = () => {
+    setLoading(true);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (userInfo == null || currentUser == null) {
+    if (userInfo == null || currentUser.userId === "") {
       setOrders([]);
       return;
     }
@@ -109,6 +125,7 @@ const App = () => {
     promise
       .then((res) => {
         setOrders(res.data);
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   };
@@ -139,7 +156,7 @@ const App = () => {
     loadProducts();
     loadCartitems();
     loadOrders();
-  }, [currentUser, selectedProductId]);
+  }, [currentUser, loggedIn, selectedProductId]);
 
   const signup = (e) => {
     e.preventDefault();
@@ -188,32 +205,59 @@ const App = () => {
         if (res.status === 200) {
           console.log(currentUser);
           localStorage.setItem("userInfo", JSON.stringify(credential));
+          setLoggedIn(true);
           loadCurrentUser();
+          setMessage("");
+          setKeyword("");
           navigate("/");
         }
       })
       .catch(() => {
+        setMessage("Invalid username or password.");
         console.log("login Failed");
       });
   };
 
   const logout = () => {
     localStorage.clear();
+    setLoggedIn(false);
     setSelectedProductId(0);
-    setCurrentUser(null);
+    setCurrentUser({
+      userId: "",
+      name: "",
+      email: "",
+      role: "",
+      phoneNo: "",
+      password: "",
+      address: "",
+    });
+    setMessage("");
+    setKeyword("");
     navigate("/login");
+  };
+
+  const handleSearch = (kwd) => {
+    setKeyword(kwd);
   };
 
   return (
     <div className="container-fluid m-0 p-0">
-      <Header logout={logout} loadCurrentUser={loadCurrentUser} />
+      <Header logout={logout} currentUser={currentUser} />
       <Routes>
         <Route
           exact
           path="/"
           element={
             <Homepage
-              products={products}
+              products={products.filter(
+                (product) =>
+                  product.productName
+                    .toLowerCase()
+                    .includes(keyword.toLowerCase()) ||
+                  product.productDesc
+                    .toLowerCase()
+                    .includes(keyword.toLowerCase())
+              )}
               setProducts={setProducts}
               categories={categories}
               selectedProductId={selectedProductId}
@@ -222,13 +266,17 @@ const App = () => {
               setQuantity={setQuantity}
               cartItems={cartItems}
               loadCartitems={loadCartitems}
+              loadProducts={loadProducts}
+              handleSearch={handleSearch}
             />
           }
         />
         <Route
           exact
           path="/login"
-          element={<Login sendLoginRequest={sendLoginRequest} />}
+          element={
+            <Login sendLoginRequest={sendLoginRequest} message={message} />
+          }
         />
         <Route exact path="/signup" element={<Signup signup={signup} />} />
         <Route
@@ -260,6 +308,8 @@ const App = () => {
               loadProducts={loadProducts}
               categories={categories}
               suppliers={suppliers}
+              loading={loading}
+              setLoading={setLoading}
             />
           }
         />
@@ -287,13 +337,22 @@ const App = () => {
               orders={orders}
               loadOrders={loadOrders}
               currentUser={currentUser}
+              setCurrentOrder={setCurrentOrder}
+              loading={loading}
+              setLoading={setLoading}
             />
           }
         />
         <Route
           exact
           path="/payment"
-          element={<Payment cartItems={cartItems} orders={orders} />}
+          element={
+            <Payment
+              cartItems={cartItems}
+              currentOrder={currentOrder}
+              loadOrders={loadOrders}
+            />
+          }
         />
         <Route
           exact
@@ -304,6 +363,7 @@ const App = () => {
               orders={orders}
               loadOrders={loadOrders}
               userList={userList}
+              loading={loading}
             />
           }
         />
@@ -314,6 +374,7 @@ const App = () => {
             <Account
               currentUser={currentUser}
               loadCurrentUser={loadCurrentUser}
+              loading={loading}
             />
           }
         />

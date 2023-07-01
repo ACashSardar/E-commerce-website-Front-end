@@ -1,78 +1,97 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Header = ({logout,loadCurrentUser}) => {
+const Header = ({logout,currentUser}) => {
 
     const userInfo=JSON.parse(localStorage.getItem("userInfo"));
     const username=userInfo?userInfo.username:null;
 
+    console.log(username);
   return (
     <header>
-        <nav className='navbar navbar-expand-lg px-2 py-3 accent1-bg shadow'>
+        <nav className='navbar navbar-expand-lg bg-light fixed-top shadow py-3 px-2'>
             <div className="container-fluid">
-                <img src="https://seeklogo.com/images/E/e-commerce-logo-B0AE7EE720-seeklogo.com.png" alt="" className="brand-logo" />
-                {/* <Link className="navbar-brand fs-3 ms-2 text-light fw-bold" href="#">E-commerce App</Link> */}
+                <img src="https://www.pngkit.com/png/full/364-3642224_clarity-ecommerce-logo-logo-e-commerce-png.png" alt="" className="brand-logo" style={{width: "200px"}} />
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link className="nav-link link-light fs-5" to="/"><i className='fa fa-home'></i> Home</Link>
+                            <Link className="nav-link fw-normal fs-6 me-2" to="/">HOME</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link link-light fs-5" to="/cart"><i className='fa fa-shopping-cart'></i> My Cart</Link>
-                        </li>
-                        <li className="nav-item">
-                                <Link className="nav-link link-light fs-5" to="/order"><i className='fa fa-usd'></i> My Orders</Link>
-                        </li>
-                        {/* {
-                            userRole==="ROLE_ADMIN" ?
-                        <> */}
+
+                        { 
+
+                            username!==null && currentUser.role==="ROLE_USER"?                       
                             <li className="nav-item">
-                                <Link className="nav-link link-light fs-5" to="/category"><i className='fa fa-list-alt'></i> Category</Link>
+                                <Link className="nav-link fw-normal fs-6 me-2" to="/cart">MY CART</Link>
                             </li>
+                            :
+                            <></>
+
+                        }
+
+                        { 
+                            
+                            username!==null && (currentUser.role==="ROLE_USER"||currentUser.role==="ROLE_DELIVERY")?
+
                             <li className="nav-item">
-                                <Link className="nav-link link-light fs-5" to="/supplier"><i className='fa fa-industry'></i> Supplier</Link>
+                                    <Link className="nav-link fw-normal fs-6 me-2" to="/order">MY ORDERS</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link link-light fs-5" to="/product"><i className='fa fa-gift'></i> Product</Link>
+                            :
+                            <></>
+
+                        }
+
+                        {
+                            currentUser.role==="ROLE_ADMIN" ?
+                        <>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle fs-6 me-2" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    MY TASKS
+                                </a>
+                                <ul className="dropdown-menu rounded-0" aria-labelledby="navbarDropdown" style={{width: "200px"}}>
+                                    <li><Link className="nav-link text-decoration-none fs-6 mx-3 my-2" to="/category">CATEGORY</Link></li>
+                                    <li><Link className="nav-link text-decoration-none fs-6 mx-3 my-2" to="/supplier">SUPPLIER</Link></li>
+                                    <li><Link className="nav-link text-decoration-none fs-6 mx-3 my-2" to="/product">PRODUCT</Link></li>
+                                    <li><Link className="nav-link text-decoration-none fs-6 mx-3 my-2" to="/customerOrders">CUSTOMER ORDERS</Link></li>
+                                </ul>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link link-light fs-5" to="/customerOrders"><i className='fa fa-usd'></i> Customer Orders</Link>
-                            </li>
-                        {/* </>
+                        </>
                         :<></>
+
                         }
 
                         { 
                         
-                        username===""?
-                        <> */}
+                        username===null?
+                        <>
                             <li className="nav-item">
-                                <Link className="nav-link link-light fs-5" to="/login"><i className='fa fa-sign-in'></i> Login</Link>
+                                <Link className="nav-link fw-normal fs-6 me-2" to="/login">LOG IN</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link link-light fs-5" to="/signup"><i className='fa fa-user-plus'></i> SignUp</Link>
+                                <Link className="nav-link fw-normal fs-6 me-2" to="/signup">SIGN UP</Link>
                             </li>
-                        {/* </>
-                        :<></>
+                        </>
+                        :
+                        <>
+                            <li className="nav-item">
+                                <label className="nav-link fw-normal fs-6 me-2" onClick={()=>logout()}>LOG OUT</label>
+                            </li>                         
+                        </>
+
                         }
-
-                        { username!==""?
-                        <> */}
-
-                            <li className="nav-item">
-                                <label className="nav-link link-light fs-5" onClick={()=>logout()}><i className='fa fa-sign-out'></i> Log out</label>
-                            </li>
-                            
-                        {/* </>
-                        :<></>
-                        } */}
                         
                         <li className="nav-item">
-                            <Link className="nav-link link-light fs-5" to="/account"><i className='fa fa-user'></i> {username?username:"unregistered user"}</Link>
-                        </li>                      
+                            <Link className="nav-link fw-normal fs-6 me-2" to="/account">MY ACCOUNT</Link>
+                        </li>     
+                        <li className="nav-item">
+                            <Link className="nav-link fw-normal fs-6 me-2" to="/aboutUs">ABOUT US</Link>
+                        </li>  
+                        <li className="nav-item">
+                            <Link className="nav-link fw-normal fs-6 me-2" to="/contact">CONTACT</Link>
+                        </li>                   
                     </ul>
                 </div>
             </div>

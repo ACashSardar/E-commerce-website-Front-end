@@ -1,11 +1,14 @@
 import axios from "axios";
 
-const CATEGORY_BASE_URL = "http://localhost:8080/api/v1/categories";
-const SUPPLIER_BASE_URL = "http://localhost:8080/api/v1/suppliers";
-const PRODUCT_BASE_URL = "http://localhost:8080/api/v1/products";
-const CARTITEM_BASE_URL = "http://localhost:8080/api/v1/cartitems";
-const ORDER_BASE_URL = "http://localhost:8080/api/v1/orders";
-const USER_BASE_URL = "http://localhost:8080/api/v1/users";
+const BASE_URL = "http://localhost:8080";
+
+const CATEGORY_BASE_URL = BASE_URL + "/api/v1/categories";
+const SUPPLIER_BASE_URL = BASE_URL + "/api/v1/suppliers";
+const PRODUCT_BASE_URL = BASE_URL + "/api/v1/products";
+const CARTITEM_BASE_URL = BASE_URL + "/api/v1/cartitems";
+const ORDER_BASE_URL = BASE_URL + "/api/v1/orders";
+const USER_BASE_URL = BASE_URL + "/api/v1/users";
+const REVIEW_BASE_URL = BASE_URL + "/api/v1/reviews";
 
 // Category API calls
 export const getCategories = (userInfo) => {
@@ -103,6 +106,9 @@ export const getCartItemsByUser = (userInfo) => {
 export const addCartItem = (data, productId, userInfo) => {
   console.log("post request made");
   console.log(data);
+  if (userInfo == null) {
+    alert("You must login first");
+  }
   return axios.post(
     CARTITEM_BASE_URL + "/product/" + productId + "/user/" + userInfo.username,
     data,
@@ -204,4 +210,19 @@ export const updateDelivery = (orderId, data, userInfo) => {
   return axios.put(ORDER_BASE_URL + "/update/" + orderId, data, {
     auth: userInfo,
   });
+};
+
+// Review API calls
+export const addReview = (productId, data, userInfo) => {
+  console.log("post request made");
+  return axios.post(
+    REVIEW_BASE_URL + "/product/" + productId + "/user/" + userInfo.username,
+    data,
+    userInfo
+  );
+};
+
+export const deleteReview = (reviewId, userInfo) => {
+  console.log("delete request made");
+  return axios.delete(REVIEW_BASE_URL + "/" + reviewId, { auth: userInfo });
 };

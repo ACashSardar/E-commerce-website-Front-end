@@ -1,7 +1,7 @@
 import React,{ useState}  from 'react'
 import {addProduct,deleteProduct,updateProduct} from "../services/EcommerceServices"
 
-const ListProducts = ({products, loadProducts, categories, suppliers}) => {
+const ListProducts = ({products, loadProducts, categories, suppliers,loading,setLoading}) => {
   const [productName, setProductName]=useState("")
   const [productDesc, setProductDesc]=useState("")
   const [price, setPrice]=useState(0)
@@ -85,11 +85,10 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
 
 
   return (
-      <div className="container-fluid p-0" style={{maxWidth:"85rem"}}>
-        
+      <div className="bg-canvas p-5" >
         { editing ? 
-            <form className="mx-auto mb-5 border p-3 mt-5 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleUpdateProduct(e,editItemId,userInfo)}>
-              <label className='fs-3 fw-normal text-success'>EDIT PRODUCT</label>
+            <form className="mx-auto mb-5 border p-3 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleUpdateProduct(e,editItemId,userInfo)}>
+              <label className='fs-3 fw-bold text-dark'>EDIT PRODUCT</label>
               <hr/>
               <div className="mb-1">
                 <input type="text" className="form-control rounded-0" name="productName" placeholder='Enter Product Name' value={productName} onChange={(e)=>setProductName(e.target.value)} required/>
@@ -124,8 +123,8 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
               <button type="submit" className="custom-btn" style={{width:"100%"}}>Update Product</button>
             </form>           
           :
-            <form className="mx-auto mb-5 border p-3 mt-5 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddProduct(e,userInfo)}>
-              <label className='fs-3 fw-normal text-success'>ADD PRODUCT</label>
+            <form className="mx-auto mb-5 border p-3 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddProduct(e,userInfo)}>
+              <label className='fs-3 fw-bold text-dark'>ADD PRODUCT</label>
               <hr/>
               <div className="mb-1">
                 <input type="text" className="form-control rounded-0" name="productName" placeholder='Enter Product Name' value={productName} onChange={(e)=>setProductName(e.target.value)} required/>
@@ -163,58 +162,66 @@ const ListProducts = ({products, loadProducts, categories, suppliers}) => {
               <button type="submit" className="custom-btn">Add Product</button>
             </form>
         }
-        <div className='mb-1'>
-          <span className='fw-light fs-4 accent1-bg badge rounded-0 mx-auto'><i class="fa fa-shopping-bag"></i> List of Products :</span>
-        </div>
+
         <div className="row mx-0">
             <table className='table table-hover border' >
                 <thead>
-                    <tr className='accent1-bg text-light'>
-                        <th className="fs-5 fw-light">ProductID</th>
-                        <th className="fs-5 fw-light">Name</th>
-                        <th className="fs-5 fw-light">Description</th>
-                        <th className="fs-5 fw-light">Price</th>
-                        <th className="fs-5 fw-light">Stock</th>
-                        <th className="fs-5 fw-light">Image</th>
-                        <th className="fs-5 fw-light">Supplier</th>
-                        <th className="fs-5 fw-light">Actions</th>
+                    <tr className='bg-light'>
+                        <th className="fs-6 fw-bold">Product ID</th>
+                        <th className="fs-6 fw-bold">Name</th>
+                        <th className="fs-6 fw-bold">Description</th>
+                        <th className="fs-6 fw-bold">Price</th>
+                        <th className="fs-6 fw-bold">In Stock</th>
+                        <th className="fs-6 fw-bold">Image</th>
+                        <th className="fs-6 fw-bold">Supplier</th>
+                        <th className="fs-6 fw-bold">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        products.map((product,index)=>
-
-                        <tr key={product.productId}>
-                            <th className="fs-6 fw-light">ECPD{product.productId}</th>
-                            <th className="fs-6 fw-light">{product.productName}</th>
-                            <th className="fs-6 fw-light">{product.productDesc}</th>
-                            <th className="fs-6 fw-light">{product.price} ₹</th>
-                            <th className="fs-6 fw-light">{product.stock}</th>
-                            <th className="fs-6 fw-light"><img src={`http://localhost:8080/api/v1/products/image/${product.imageURL}`} alt="" style={{width:"3rem",height:"3rem"}}/></th>
-                            <th className="fs-6 fw-light">{product.supplier.supplierName}</th>
-                            <th className='d-flex'>
-                              <button onClick={(e)=>{
-                                  setEditing(true)
-                                  setEditItemId(product.productId)
-                                  setProductName(product.productName)
-                                  setProductDesc(product.productDesc)
-                                  setPrice(product.price)
-                                  setStock(product.stock)
-                                  setImageURL(product.imageURL)
-                                  setCategoryId(product.catId)
-                                  setSupplierId(product.supId)
-                                  loadProducts()
-                                }
-                              } className='btn btn-primary rounded-0 me-1 my-2'>Edit</button>
-                              
-                              <button onClick={(e)=>{
-                                handleDeleteProduct(product.productId,userInfo)
+                  {
+                    loading?
+                    <tr>
+                      <td colSpan={8} className='text-center' disabled>
+                          Loading...
+                          <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      </td>
+                    </tr>
+                    :<>
+                      {
+                      products.map((product,index)=>
+                      <tr key={product.productId}>
+                          <th className="fs-6 fw-light">ECPD{product.productId}</th>
+                          <th className="fs-6 fw-light">{product.productName}</th>
+                          <th className="fs-6 fw-light">{product.productDesc}</th>
+                          <th className="fs-6 fw-light">{product.price} ₹</th>
+                          <th className="fs-6 fw-light">{product.stock}</th>
+                          <th className="fs-6 fw-light"><img src={`http://localhost:8080/api/v1/products/image/${product.imageURL}`} alt="" style={{width:"3rem",height:"3rem"}}/></th>
+                          <th className="fs-6 fw-light">{product.supplier.supplierName}</th>
+                          <th className='d-flex'>
+                            <button onClick={(e)=>{
+                                setEditing(true)
+                                setEditItemId(product.productId)
+                                setProductName(product.productName)
+                                setProductDesc(product.productDesc)
+                                setPrice(product.price)
+                                setStock(product.stock)
+                                setImageURL(product.imageURL)
+                                setCategoryId(product.catId)
+                                setSupplierId(product.supId)
+                                loadProducts()
                               }
-                            } className='btn btn-danger rounded-0 my-2'>Delete</button>
-                            </th>
-                        </tr>
-                        )
+                            } className='btn btn-primary btn-sm fw-bold rounded-0 me-1 my-2'>Edit</button>
+                            
+                            <button onClick={(e)=>{
+                              handleDeleteProduct(product.productId,userInfo)
+                            }
+                          } className='btn btn-danger btn-sm fw-bold rounded-0 my-2'>Delete</button>
+                          </th>
+                      </tr>
+                      )
                     }
+                    </>
+                  }
                 </tbody>
             </table>
         </div>

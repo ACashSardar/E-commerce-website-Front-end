@@ -2,9 +2,9 @@ import React from 'react'
 
 const Signup = ({signup}) => {
   return (
-    <div className='d-flex justify-content-center'>
-      <form action="" className='border p-3 my-5 bg-light' style={{width:"25rem"}} onSubmit={(e)=>signup(e)}>
-        <label className='fs-3 fw-normal text-success'>SIGN UP</label>
+    <div className='bg-canvas p-5 d-flex justify-content-center'>
+      <form action="" className='border p-3 bg-light' style={{width:"25rem", height:"29rem"}} onSubmit={(e)=>signup(e)}>
+        <label className='fs-3 fw-bold text-dark'>SIGN UP</label>
         <p className='fs-6 fw-light text-secondary'>Please fill the form to create an account!</p>
         <hr />
         <input className='form-control mb-2 rounded-0' type="text" placeholder='Enter your name' name='name'/>

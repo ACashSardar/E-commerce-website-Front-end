@@ -45,10 +45,10 @@ const ListCategories = ({categories,loadCategories}) => {
   }
 
   return (
-    <div className="container-fluid p-0" style={{maxWidth:"85rem"}}>
+    <div className="bg-canvas p-5">
       { edting ? 
-          <form className="mx-auto mb-5 border p-3 mt-5 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleUpdateCategory(e,editItemId,userInfo)}>
-            <label className='fs-3 fw-normal text-success'>EDIT CATEGORY</label>
+          <form className="mx-auto mb-5 border p-3 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleUpdateCategory(e,editItemId,userInfo)}>
+            <label className='fs-3 fw-bold text-dark'>EDIT CATEGORY</label>
             <hr/>
             <div className="mb-1">
               <input type="text" className="form-control rounded-0" name="categoryName" placeholder='Enter Category Name' value={categoryName} onChange={(e)=>setCategoryName(e.target.value)} required/>
@@ -59,8 +59,8 @@ const ListCategories = ({categories,loadCategories}) => {
             <button type="submit" className="custom-btn" style={{width:"100%"}}>Update Category</button>
           </form>           
         :
-          <form className="mx-auto mb-5 border p-3 mt-5 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddCategory(e,userInfo)}>
-            <label className='fs-3 fw-normal text-success'>ADD CATEGORY</label>
+          <form className="mx-auto mb-5 border p-3 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddCategory(e,userInfo)}>
+            <label className='fs-3 fw-bold text-dark'>ADD CATEGORY</label>
             <hr/>
             <div className="mb-1">
               <input type="text" className="form-control rounded-0" name="categoryName" placeholder='Enter Category Name' value={categoryName} onChange={(e)=>setCategoryName(e.target.value)} required/>
@@ -71,16 +71,14 @@ const ListCategories = ({categories,loadCategories}) => {
             <button type="submit" className="custom-btn" style={{width:"100%"}}>Add Category</button>
           </form>
       }
-      <div className='mb-1'>
-        <span className='fw-light fs-4 accent1-bg badge rounded-0 mx-auto'><i class="fa fa-shopping-bag"></i> List of Categories :</span>
-      </div>
+
       <div className="row mx-0">
           <table className='table table-hover border'>
               <thead>
-                  <tr className='accent1-bg text-light'>
-                      <th className="fs-5 fw-light">Category Name</th>
-                      <th className="fs-5 fw-light">Description</th>
-                      <th className="fs-5 fw-light">Actions</th>
+                  <tr className='bg-light'>
+                      <th className="fs-6 fw-bold">Category Name</th>
+                      <th className="fs-6 fw-bold">Description</th>
+                      <th className="fs-6 fw-bold">Actions</th>
                   </tr>
               </thead>
               <tbody>
@@ -98,12 +96,12 @@ const ListCategories = ({categories,loadCategories}) => {
                                 setCategoryDesc(category.categoryDesc)
                                 loadCategories()
                               }
-                            } className='btn btn-primary rounded-0 me-1'>Edit</button>
+                            } className='btn btn-primary btn-sm fw-bold rounded-0 me-1'>Edit</button>
 
                             <button onClick={(e)=>{
                               handleDeleteCategory(category.categoryId,userInfo)
                             }
-                          } className='btn btn-danger rounded-0'>Delete</button>
+                          } className='btn btn-danger btn-sm fw-bold rounded-0'>Delete</button>
                           </th>
                       </tr>
                       )
