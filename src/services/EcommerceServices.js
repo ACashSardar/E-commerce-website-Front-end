@@ -3,6 +3,8 @@ import axios from "axios";
 const BASE_URL =
   "https://e-commerce-website-back-end-production.up.railway.app";
 
+// const BASE_URL = "http://localhost:8080";
+
 const CATEGORY_BASE_URL = BASE_URL + "/api/v1/categories";
 const SUPPLIER_BASE_URL = BASE_URL + "/api/v1/suppliers";
 const PRODUCT_BASE_URL = BASE_URL + "/api/v1/products";

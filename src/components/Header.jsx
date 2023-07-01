@@ -48,9 +48,9 @@ const Header = ({logout,currentUser}) => {
                             currentUser.role==="ROLE_ADMIN" ?
                         <>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle fs-6 me-2" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <label className="nav-link dropdown-toggle fs-6 me-2" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     MY TASKS
-                                </a>
+                                </label>
                                 <ul className="dropdown-menu rounded-0" aria-labelledby="navbarDropdown" style={{width: "200px"}}>
                                     <li><Link className="nav-link text-decoration-none fs-6 mx-3 my-2" to="/category">CATEGORY</Link></li>
                                     <li><Link className="nav-link text-decoration-none fs-6 mx-3 my-2" to="/supplier">SUPPLIER</Link></li>
