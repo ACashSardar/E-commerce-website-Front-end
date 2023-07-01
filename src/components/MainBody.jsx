@@ -28,7 +28,6 @@ const MainBody = ({products,setProducts,categories,setSelectedProductId,keyword,
     const calculateRatings=(reviews)=>{
         const numOfRatings=reviews.length;
     
-        console.log(numOfRatings);
         if(numOfRatings===0) return 0;
     
         let totalRatings=0;
@@ -37,7 +36,6 @@ const MainBody = ({products,setProducts,categories,setSelectedProductId,keyword,
           totalRatings+=review.rating;
         });
     
-        console.log(totalRatings);
         return parseInt(totalRatings/numOfRatings);
       }
 

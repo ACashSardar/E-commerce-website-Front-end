@@ -23,8 +23,8 @@ import Payment from "./components/Payment";
 import ListOrders from "./components/ListOrders";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import axios from "axios";
 import Account from "./components/Account";
+import axios from "axios";
 
 const App = () => {
   const navigate = useNavigate();
@@ -132,10 +132,11 @@ const App = () => {
 
   const loadCurrentUser = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (userInfo != null)
+    if (userInfo != null) {
       getUserByEmail(userInfo).then((res) => {
         setCurrentUser(res.data);
       });
+    }
   };
 
   const loadUserList = () => {
@@ -144,18 +145,21 @@ const App = () => {
       setUserList(res.data);
     });
   };
+
   useEffect(() => {
     loadCurrentUser();
   }, []);
 
   useEffect(() => {
     console.log(currentUser);
+
     loadUserList();
     loadCategories();
     loadSuppliers();
     loadProducts();
     loadCartitems();
     loadOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, loggedIn, selectedProductId]);
 
   const signup = (e) => {
@@ -167,7 +171,7 @@ const App = () => {
     const phoneNo = e.target.elements.phoneNo.value;
     const role = e.target.elements.role.value;
 
-    console.log(name, email, password, address, role);
+    // console.log(name, email, password, address, role);
     axios
       .post("http://localhost:8080/api/v1/users", {
         name,
