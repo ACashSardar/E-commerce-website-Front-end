@@ -1,5 +1,6 @@
 import React,{ useState}  from 'react'
 import {addProduct,deleteProduct,updateProduct} from "../services/EcommerceServices"
+import { BASE_URL } from '../services/ServerBaseURL';
 
 const ListProducts = ({products, loadProducts, categories, suppliers,loading,setLoading}) => {
   const [productName, setProductName]=useState("")
@@ -100,7 +101,7 @@ const ListProducts = ({products, loadProducts, categories, suppliers,loading,set
                 <input type="text" className="form-control rounded-0 me-1" name="price" placeholder='Enter Product Price' value={price===0?"":price} onChange={(e)=>setPrice(e.target.value)} required/>
                 <input type="text" className="form-control rounded-0" name="stock" placeholder='Enter number of products in the stock' value={stock===0?"":stock} onChange={(e)=>setStock(e.target.value)} required/>
               </div>
-              <img class="mb-1 rounded-1" src={`http://localhost:8080/api/v1/products/image/${imageURL}`} alt="" style={{width:"100%"}}/>
+              <img class="mb-1 rounded-1" src={BASE_URL+`/api/v1/products/image/${imageURL}`} alt="" style={{width:"100%"}}/>
               <div className="mb-1 d-flex">
                 <select class="form-select rounded-0 me-1" aria-label="Default select example" value={categoryId} onChange={(e)=>setCategoryId(e.target.value)}>
                   <option selected>Choose a category</option>
