@@ -4,6 +4,7 @@ import MainBody from './MainBody';
 import { Link, useNavigate} from 'react-router-dom';
 import { addCartItem, addReview, deleteReview } from '../services/EcommerceServices';
 import { useState } from 'react';
+import { BASE_URL } from '../services/ServerBaseURL';
 
 const Homepage = ({products,setProducts,categories,selectedProductId,setSelectedProductId,
   quantity, setQuantity,loadCartitems,cartItems,handleSearch,loadProducts}) => {
@@ -116,7 +117,7 @@ const Homepage = ({products,setProducts,categories,selectedProductId,setSelected
             { product.productId===selectedProductId?
             <div className='container-fluid d-flex justify-content-center p-3'>
               <div className="card rounded-0 border-0" style={{width:"20rem"}} >
-                <img src={`http://localhost:8080/api/v1/products/image/${product.imageURL}`} className="card-img-top rounded-0" alt="..." />
+                <img src={BASE_URL+`/api/v1/products/image/${product.imageURL}`} className="card-img-top rounded-0" alt="..." />
               </div>
               <div className="card rounded-0 border-0 p-3" style={{width:"20rem"}}>
                   <p className='fw-normal fs-3 mb-0'>{product.productName}</p>

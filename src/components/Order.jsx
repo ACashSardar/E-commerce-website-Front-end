@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { updateOrder,deleteOrder, updateDelivery } from '../services/EcommerceServices';
+import { BASE_URL } from '../services/ServerBaseURL';
 
 const Order = ({orders, loadOrders, currentUser,setCurrentOrder,loading,setLoading}) => {
 
@@ -80,7 +81,7 @@ const Order = ({orders, loadOrders, currentUser,setCurrentOrder,loading,setLoadi
                                             <td className="fs-6 fw-light">ECPD{orderItem.product.productId}</td>
                                             <td className="fs-6 fw-light">{orderItem.product.productName}</td>
                                             <td className="fs-6 fw-light">{orderItem.product.price} ₹ Only</td>
-                                            <td className="fs-6 fw-light"><img src={`http://localhost:8080/api/v1/products/image/${orderItem.product.imageURL}`} alt="" style={{width:"3rem"}}/></td>
+                                            <td className="fs-6 fw-light"><img src={BASE_URL+`/api/v1/products/image/${orderItem.product.imageURL}`} alt="" style={{width:"3rem"}}/></td>
                                             <td className="fs-6 fw-light">{orderItem.quantity}</td>
                                             <td className="fs-6 fw-light">{orderItem.quantity*orderItem.product.price} ₹</td>
                                             <td className="fs-6 fw-light">{order.deliveryStatus==null?"Pending":order.deliveryStatus}</td>
