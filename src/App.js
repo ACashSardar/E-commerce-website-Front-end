@@ -25,6 +25,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Account from "./components/Account";
 import axios from "axios";
+import { BASE_URL } from "./services/ServerBaseURL";
 
 const App = () => {
   const navigate = useNavigate();
@@ -171,9 +172,8 @@ const App = () => {
     const phoneNo = e.target.elements.phoneNo.value;
     const role = e.target.elements.role.value;
 
-    // console.log(name, email, password, address, role);
     axios
-      .post("http://localhost:8080/api/v1/users", {
+      .post(BASE_URL + "/api/v1/users", {
         name,
         email,
         password,
@@ -201,7 +201,7 @@ const App = () => {
     const credential = { username: uname, password: pwd };
 
     axios
-      .get("http://localhost:8080/api/v1/products", {
+      .get(BASE_URL + "/api/v1/products", {
         auth: { username: uname, password: pwd },
       })
       .then((res) => {

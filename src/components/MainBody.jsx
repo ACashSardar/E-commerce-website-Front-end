@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../services/ServerBaseURL';
 
 const MainBody = ({products,setProducts,categories,setSelectedProductId,keyword,handleSearch}) => {
 
@@ -10,7 +11,7 @@ const MainBody = ({products,setProducts,categories,setSelectedProductId,keyword,
     const userInfo=JSON.parse(localStorage.getItem("userInfo"));
 
     const searchByCategory=(catId)=>{
-        axios.get("http://localhost:8080/api/v1/products/search/"+catId,userInfo).then((res)=>{
+        axios.get(BASE_URL+"/api/v1/products/search/"+catId,userInfo).then((res)=>{
             setProducts(res.data)
             categories.map(catg=>catg.categoryId).forEach(id => {
                 if(id===catId) document.getElementById(id).style.backgroundColor="lightblue"  
@@ -79,7 +80,7 @@ const MainBody = ({products,setProducts,categories,setSelectedProductId,keyword,
                             <Link className='selected-item link-dark' onClick={()=>{
                                 setSelectedProductId(product.productId);                        
                             }}>
-                                <img src={`http://localhost:8080/api/v1/products/image/${product.imageURL}`} className="card-img-top" alt="..." style={{height:"14rem"}}/>
+                                <img src={BASE_URL+`/api/v1/products/image/${product.imageURL}`} className="card-img-top" alt="..." style={{height:"14rem"}}/>
                             
                             <div className='card-body'>
                                 <label className='card-text fw-light fs-6 text-dark'>{product.productName}</label><br />
