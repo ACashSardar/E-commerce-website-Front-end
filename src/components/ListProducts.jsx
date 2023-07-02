@@ -196,7 +196,7 @@ const ListProducts = ({products, loadProducts, categories, suppliers,loading,set
                           <th className="fs-6 fw-light">{product.productDesc}</th>
                           <th className="fs-6 fw-light">{product.price} ₹</th>
                           <th className="fs-6 fw-light">{product.stock}</th>
-                          <th className="fs-6 fw-light"><img src={`http://localhost:8080/api/v1/products/image/${product.imageURL}`} alt="" style={{width:"3rem",height:"3rem"}}/></th>
+                          <th className="fs-6 fw-light"><img src={BASE_URL+`/api/v1/products/image/${product.imageURL}`} alt="" style={{width:"3rem",height:"3rem"}}/></th>
                           <th className="fs-6 fw-light">{product.supplier.supplierName}</th>
                           <th className='d-flex'>
                             <button onClick={(e)=>{
