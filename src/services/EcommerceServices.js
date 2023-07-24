@@ -1,5 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "./ServerBaseURL";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CATEGORY_BASE_URL = BASE_URL + "/api/v1/categories";
 const SUPPLIER_BASE_URL = BASE_URL + "/api/v1/suppliers";
@@ -103,10 +105,8 @@ export const getCartItemsByUser = (userInfo) => {
 };
 
 export const addCartItem = (data, productId, userInfo) => {
-  console.log("post request made");
-  console.log(data);
   if (userInfo == null) {
-    alert("You must login first");
+    toast("You must login first");
   }
   return axios.post(
     CARTITEM_BASE_URL + "/product/" + productId + "/user/" + userInfo.username,

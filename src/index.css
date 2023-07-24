@@ -1,9 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Amatic+SC&family=Caveat:wght@500&family=Comfortaa:wght@300&family=Dancing+Script&family=Fascinate&family=Fuzzy+Bubbles&family=Kanit:wght@200&family=Klee+One&family=Labrada:wght@400&family=Lato:wght@300&family=Lobster&family=Merriweather:wght@300&family=Nunito:wght@200&family=Pacifico&family=Poppins:wght@100&family=Roboto+Condensed:wght@300&family=Satisfy&family=Titillium+Web:wght@300&family=Ubuntu&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC&family=Caveat:wght@500&family=Comfortaa:wght@300&family=Dancing+Script&family=Fascinate&family=Fuzzy+Bubbles&family=Kanit:wght@200&family=Klee+One&family=Labrada:wght@400&family=Lato:wght@300&family=Lobster&family=Merriweather:wght@200&family=Nunito:wght@300&family=Pacifico&family=Poppins:wght@200&family=Roboto+Condensed:wght@300&family=Satisfy&family=Titillium+Web:wght@300&family=Ubuntu&display=swap");
 
 body {
   margin: 0;
-  font-family: Calibri light;
-  font-size: 12px;
+  font-family: Titillium Web;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
 :root {
@@ -23,7 +24,7 @@ body {
 }
 
 .nav-link:hover {
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   color: var(--main-accent-color);
   text-decoration: underline 5px;
   text-underline-position: under;
@@ -33,15 +34,15 @@ body {
 .bg-canvas {
   margin-top: 72px;
   min-height: 82vh;
+  background: dodgerblue;
 }
 
 .selected-item {
   text-decoration: none;
 }
 .selected-item:hover {
-  border: 1px solid lightseagreen;
-  border-radius: 5px;
-  color: #333;
+  transform: scale(0.99);
+  transition: all 0.3s ease-in-out;
 }
 
 .accent1-bg {
@@ -50,22 +51,6 @@ body {
 
 .accent2-bg {
   background: yellow;
-}
-
-.custom-btn {
-  width: 100%;
-  padding: 10px;
-  color: white;
-  background: var(--main-accent-color);
-  border: 1px var(--main-accent-color);
-  margin-top: 5px;
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.custom-btn:hover {
-  opacity: 0.8;
-  transition: all 0.5s ease;
 }
 
 .stars {

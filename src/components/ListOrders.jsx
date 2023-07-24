@@ -1,6 +1,5 @@
 import React from 'react'
 import { assignDelivery } from '../services/EcommerceServices';
-import { BASE_URL } from '../services/ServerBaseURL';
 
 const ListOrders = ({orders, loadOrders, userList,loading}) => {
 
@@ -14,7 +13,6 @@ const ListOrders = ({orders, loadOrders, userList,loading}) => {
         e.preventDefault();
         const deliveryPersonId=e.target.elements.deliveryPerson.value;
         if(deliveryPersonId==="") return;
-
         assignDelivery(orderId,deliveryPersonId,userInfo).then((res)=>{
             loadOrders();
         })
@@ -22,82 +20,83 @@ const ListOrders = ({orders, loadOrders, userList,loading}) => {
 
   return (
 
-    <div className='bg-canvas p-5'>
+    <div className='bg-canvas d-flex justify-content-center p-5'>
     {
         loading?
         <div className='container-fluid text-center' style={{width:"100%"}} disabled>
             Loading...
             <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         </div>
-        :<div>
+        :<div style={{width:"70%"}}>
             {
-                orders.map((order,index)=>
-                    order.transaction==='Successful'?
-                        <div className='d-flex justify-content-center'>
-                            <table className='table table-hover border my-2'>
-                                <thead>
-                                    <tr className='bg-light'>
-                                        <th className="fs-6 fw-bold">Product ID</th>
-                                        <th className="fs-6 fw-bold">Name</th>
-                                        <th className="fs-6 fw-bold">Price</th>
-                                        <th className="fs-6 fw-bold">Image</th>
-                                        <th className="fs-6 fw-bold">Quantity</th>
-                                        <th className="fs-6 fw-bold">Sub Total</th>
-                                        <th className="fs-6 fw-bold">Delivery Status</th>
-                                        <th className="fs-6 fw-bold">Expected Delivery time</th>
-                                        <th className="fs-6 fw-bold">Delivery Man</th>
-                                        <th className="fs-6 fw-bold">Delivery Man PhNo.</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    order.orderItems.map((orderItem,index)=>
-                                        <tr>
-                                            <td className="fs-6 fw-light">ECPD{orderItem.product.productId}</td>
-                                            <td className="fs-6 fw-light">{orderItem.product.productName}</td>
-                                            <td className="fs-6 fw-light">{orderItem.product.price} ₹ Only</td>
-                                            <td className="fs-6 fw-light"><img src={BASE_URL+`/api/v1/products/image/${orderItem.product.imageURL}`} alt="" style={{width:"3rem"}}/></td>
-                                            <td className="fs-6 fw-light">{orderItem.quantity}</td>
-                                            <td className="fs-6 fw-light">{orderItem.quantity*orderItem.product.price} ₹</td>
-                                            <td className="fs-6 fw-light">{order.deliveryStatus==null?"Pending":order.deliveryStatus}</td>
-                                            <td className="fs-6 fw-light">{order.deliveryDate==null?"Pending":new Date(order.deliveryDate).toDateString()}</td>
-                                            <td className="fs-6 fw-light">{order.deliveryPerson==null?"Pending":order.deliveryPerson.name}</td>
-                                            <td className="fs-6 fw-light">{order.deliveryPerson==null?"Pending":order.deliveryPerson.phoneNo}</td>
-                                        </tr>
-                                    )
-                                }
-                                    <tr>
-                                        <td colSpan="2" className="fs-6 fw-normal">Order ID: ECOD{order.orderId}</td>
-                                        <td colSpan="2" className="fs-6 fw-light">{order.user.name} ({order.user.phoneNo})</td>
-                                        <td colSpan="1" className="fs-6 fw-normal">Total: {order.totalAmount} ₹</td>
-                                        <td colSpan="2" className="fs-6 fw-light">Address: {order.shippingAddress}</td>
-                                        <td colSpan="1" className="fs-6 fw-light">Order date: {new Date(order.orderDate).toDateString()}</td>
-                                        <td colSpan="2">
-                                            {
-                                                order.deliveryStatus==="✅Delivered"?
-                                                <span className='fs-6 p-2 rounded-0'>✅Order Delivered.</span>
-                                                :                                    
-                                                <form className='d-flex' onSubmit={(e)=>handleAssignOrder(order.orderId,e,userInfo)}>
-                                                    <select className='form-select-sm rounded-0' name="deliveryPerson" id="">
-                                                        <option value="">Select a delivery person</option>
-                                                        {
-                                                            deliveryPeople.map((dp,index)=>
-                                                                <option value={dp.userId}>{dp.name}</option>
-                                                            )
-                                                        }
-                                                        
-                                                    </select>
-                                                    <button className='btn btn-secondary btn-sm fw-bold rounded-0'>Assign</button>
-                                                </form>
-                                            }
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    :
-                    <></>
-                )
+            orders.length>0 ?
+                <div>
+                    {
+                        orders
+                        .filter((order, index)=>order.transaction==='Successful')
+                        .map((order,index)=>
+                            <div className='shadow bg-light rounded-1 p-4 mb-3'>
+                                <div className='row'>
+                                    <div className='col-md-6'>
+                                        <h5 className='fw-bold'>Order ID: ECOD{order.orderId}</h5>
+                                    </div>
+                                    <div className='col-md-6 text-end'>
+                                        <h5 className='fw-bold' style={{color:"limegreen"}}>Paid: {order.totalAmount} ₹</h5>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div className='row'>
+                                    <div className="col-md-6">
+                                        <h6>Order date: {new Date(order.orderDate).toLocaleString()}</h6>
+                                        <h6>Recipient: {order.user.name}</h6>
+                                        <h6>Email: {order.user.email}</h6>
+                                        <h6>Phone: {order.user.phoneNo} </h6>
+                                        <h6>Shipping Address: {order.shippingAddress}</h6>
+                                        <h6>Delivery Status: {order.deliveryStatus==null?"Pending":order.deliveryStatus}</h6>
+                                        <h6>Expected Delivery Date: {order.deliveryDate==null?"Pending":new Date(order.deliveryDate).toDateString()}</h6>
+                                        <h6>Delivery Person: {order.deliveryPerson==null?"Pending":order.deliveryPerson.name}</h6>
+                                        <h6>Delivery Person Phone: {order.deliveryPerson==null?"Pending":order.deliveryPerson.phoneNo}</h6>
+                                        {
+                                            order.deliveryStatus==="✅Delivered"?
+                                            <span className='fs-6 p-2 rounded-1'>✅Order Delivered.</span>
+                                            :                                    
+                                            <form className='d-flex' onSubmit={(e)=>handleAssignOrder(order.orderId,e,userInfo)}>
+                                                <select className='form-select rounded-1 me-1' name="deliveryPerson" id="" style={{width:"13rem"}}>
+                                                    <option value="">Select a delivery person</option>
+                                                    {
+                                                        deliveryPeople.map((dp,index)=>
+                                                            <option value={dp.userId}>{dp.name}</option>
+                                                        )
+                                                    }
+                                                    
+                                                </select>
+                                                <button className='btn btn-primary px-4 rounded-1'>Assign</button>
+                                            </form>
+                                        }
+                                    </div>
+                                    <div className="col-md-6">
+                                        <ul>
+                                        {
+                                            order.orderItems.map((orderItem,index)=>
+                                                <li>
+                                                    <span className='d-flex'>
+                                                        <h6 className='text-secondary fw-bold me-2'>{orderItem.quantity} x </h6>
+                                                        <h6>{orderItem.product.productName}</h6>
+                                                    </span>
+                                                </li>
+                                            )
+                                        }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                </div>
+                :
+                <div className='text-center text-secondary'>
+                    <h5>Order list is currently empty.</h5>
+                </div>
             }
         </div>
     }

@@ -1,5 +1,7 @@
 import React,{ useState}  from 'react'
 import {addCategory,deleteCategory,updateCategory} from "../services/EcommerceServices"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ListCategories = ({categories,loadCategories}) => {
   const [categoryName, setCategoryName] = useState("")
@@ -20,12 +22,14 @@ const ListCategories = ({categories,loadCategories}) => {
       setCategoryDesc('')
       setCategoryName('')
       loadCategories()
+      toast("Category added successfully.");
     })
   }
 
   const handleDeleteCategory=(categoryId,userInfo)=>{
     deleteCategory(categoryId,userInfo).then((res)=>{
       loadCategories()
+      toast("Category deleted successfully.");
     })
   }
 
@@ -40,6 +44,7 @@ const ListCategories = ({categories,loadCategories}) => {
       setEditItemId(0)
       setEditing(false)
       loadCategories()
+      toast("Category updated successfully.");
     })
     
   }
@@ -47,33 +52,31 @@ const ListCategories = ({categories,loadCategories}) => {
   return (
     <div className="bg-canvas p-5">
       { edting ? 
-          <form className="mx-auto mb-5 border p-3 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleUpdateCategory(e,editItemId,userInfo)}>
-            <label className='fs-3 fw-bold text-dark'>EDIT CATEGORY</label>
-            <hr/>
+          <form className="mx-auto mb-5 p-4 shadow bg-light rounded-1" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleUpdateCategory(e,editItemId,userInfo)}>
+            <label className='fs-4 fw-bold text-dark mb-2'>EDIT CATEGORY</label>
             <div className="mb-1">
-              <input type="text" className="form-control rounded-0" name="categoryName" placeholder='Enter Category Name' value={categoryName} onChange={(e)=>setCategoryName(e.target.value)} required/>
+              <input type="text" className="form-control rounded-1" name="categoryName" placeholder='Enter Category Name' value={categoryName} onChange={(e)=>setCategoryName(e.target.value)} required/>
             </div>
             <div className="mb-1">
-              <input type="text" className="form-control rounded-0" name="categoryDesc" placeholder='Enter Category Description' value={categoryDesc} onChange={(e)=>setCategoryDesc(e.target.value)} required/>
+              <input type="text" className="form-control rounded-1" name="categoryDesc" placeholder='Enter Category Description' value={categoryDesc} onChange={(e)=>setCategoryDesc(e.target.value)} required/>
             </div>
-            <button type="submit" className="custom-btn" style={{width:"100%"}}>Update Category</button>
+            <button type="submit" className="btn btn-primary rounded-1 p-2" style={{width:"100%"}}>Update Category</button>
           </form>           
         :
-          <form className="mx-auto mb-5 border p-3 bg-light" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddCategory(e,userInfo)}>
-            <label className='fs-3 fw-bold text-dark'>ADD CATEGORY</label>
-            <hr/>
+          <form className="mx-auto mb-5 p-4 shadow bg-light rounded-1" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddCategory(e,userInfo)}>
+            <label className='fs-4 fw-bold text-dark mb-2'>ADD CATEGORY</label>
             <div className="mb-1">
-              <input type="text" className="form-control rounded-0" name="categoryName" placeholder='Enter Category Name' value={categoryName} onChange={(e)=>setCategoryName(e.target.value)} required/>
+              <input type="text" className="form-control rounded-1" name="categoryName" placeholder='Enter Category Name' value={categoryName} onChange={(e)=>setCategoryName(e.target.value)} required/>
             </div>
             <div className="mb-1">
-              <input type="text" className="form-control rounded-0" name="categoryDesc" placeholder='Enter Category Description' value={categoryDesc} onChange={(e)=>setCategoryDesc(e.target.value)} required/>
+              <input type="text" className="form-control rounded-1" name="categoryDesc" placeholder='Enter Category Description' value={categoryDesc} onChange={(e)=>setCategoryDesc(e.target.value)} required/>
             </div>
-            <button type="submit" className="custom-btn" style={{width:"100%"}}>Add Category</button>
+            <button type="submit" className="btn btn-primary rounded-1 p-2" style={{width:"100%"}}>Add Category</button>
           </form>
       }
 
       <div className="row mx-0">
-          <table className='table table-hover border'>
+          <table className='table bg-light'>
               <thead>
                   <tr className='bg-light'>
                       <th className="fs-6 fw-bold">Category Name</th>
@@ -96,12 +99,12 @@ const ListCategories = ({categories,loadCategories}) => {
                                 setCategoryDesc(category.categoryDesc)
                                 loadCategories()
                               }
-                            } className='btn btn-primary btn-sm fw-bold rounded-0 me-1'>Edit</button>
+                            } className='btn btn-primary rounded-1 me-1'>Edit</button>
 
                             <button onClick={(e)=>{
                               handleDeleteCategory(category.categoryId,userInfo)
                             }
-                          } className='btn btn-danger btn-sm fw-bold rounded-0'>Delete</button>
+                          } className='btn btn-danger rounded-1'>Delete</button>
                           </th>
                       </tr>
                       )

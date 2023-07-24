@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import ListCategories from "./components/ListCategories";
 import {
   getCategories,
@@ -26,6 +26,9 @@ import Signup from "./components/Signup";
 import Account from "./components/Account";
 import axios from "axios";
 import { BASE_URL } from "./services/ServerBaseURL";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import PageNotFound from "./components/PageNotFound";
 
 const App = () => {
   const navigate = useNavigate();
@@ -51,6 +54,7 @@ const App = () => {
   const [currentOrder, setCurrentOrder] = useState();
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
+  const location = useLocation();
 
   const loadCategories = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -152,8 +156,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log(currentUser);
-
     loadUserList();
     loadCategories();
     loadSuppliers();
@@ -182,9 +184,8 @@ const App = () => {
         role,
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
-          console.log("Registration success");
+          toast(`Registration successful, now login please.`);
           navigate("/login");
         }
       })
@@ -205,14 +206,13 @@ const App = () => {
         auth: { username: uname, password: pwd },
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
-          console.log(currentUser);
           localStorage.setItem("userInfo", JSON.stringify(credential));
           setLoggedIn(true);
           loadCurrentUser();
           setMessage("");
           setKeyword("");
+          toast(`Login successful, Welcome ${uname}`);
           navigate("/");
         }
       })
@@ -237,12 +237,18 @@ const App = () => {
     });
     setMessage("");
     setKeyword("");
+    toast("You have been logged out.");
     navigate("/login");
   };
 
   const handleSearch = (kwd) => {
     setKeyword(kwd);
   };
+
+  useEffect(() => {
+    setKeyword("");
+    loadProducts();
+  }, [location.pathname]);
 
   return (
     <div className="container-fluid m-0 p-0">
@@ -308,12 +314,21 @@ const App = () => {
           path="/product"
           element={
             <ListProducts
-              products={products}
+              products={products.filter(
+                (product) =>
+                  product.productName
+                    .toLowerCase()
+                    .includes(keyword.toLowerCase()) ||
+                  product.productDesc
+                    .toLowerCase()
+                    .includes(keyword.toLowerCase())
+              )}
               loadProducts={loadProducts}
               categories={categories}
               suppliers={suppliers}
               loading={loading}
               setLoading={setLoading}
+              handleSearch={handleSearch}
             />
           }
         />
@@ -328,6 +343,7 @@ const App = () => {
           element={
             <Cart
               cartItems={cartItems}
+              setCartItems={setCartItems}
               loadCartitems={loadCartitems}
               loadOrders={loadOrders}
             />
@@ -355,6 +371,7 @@ const App = () => {
               cartItems={cartItems}
               currentOrder={currentOrder}
               loadOrders={loadOrders}
+              loadCartitems={loadCartitems}
             />
           }
         />
@@ -382,6 +399,7 @@ const App = () => {
             />
           }
         />
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </div>
