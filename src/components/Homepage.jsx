@@ -95,7 +95,6 @@ const Homepage = ({products,setProducts,categories,selectedProductId,setSelected
       totalRatings+=review.rating;
     });
 
-    console.log(totalRatings);
     return parseInt(totalRatings/numOfRatings);
   }
 
@@ -143,9 +142,9 @@ const Homepage = ({products,setProducts,categories,selectedProductId,setSelected
 
                     <p className='fw-light fs-6 text-success mb-2'>In-stock: {product.stock} items</p>
                     <span className='mb-1'>
-                      <button className='btn btn-secondary rounded-2 me-1' 
+                      <button className='custom-outline-btn rounded-2 me-1' 
                       onClick={()=>setSelectedProductId(0)}>Cancel</button>
-                      <button className='btn btn-success rounded-2' 
+                      <button className='custom-btn rounded-2' 
                       onClick={()=>handleAddCartItem(product.productId,quantity,userInfo)}>+ Add to Cart</button>
                     </span>
                     <p className='fw-bold fs-6 mb-0'>Description:</p>
@@ -169,19 +168,19 @@ const Homepage = ({products,setProducts,categories,selectedProductId,setSelected
                             <li className='star' id="five" name="five" onMouseEnter={()=>{handleRatings(5)}}><i className='fa fa-star'></i></li>
                           </ul>
                           <p id="rating-sense" className='text-center fs-4 fw-light ms-3'>Rate this product</p>
-                          <textarea name="comment" className='form-control' value={comment} placeholder='Say something about the product..' cols="20" rows="5"
+                          <textarea name="comment" className='form-control' value={comment} placeholder='Say something about this product..' cols="20" rows="5"
                           onChange={(e)=>setComment(e.target.value)}></textarea>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary btn-sm rounded-2 me-0" onClick={()=>{setComment(""); handleRatings(0)}}>Clear</button>
-                          <button type="button" class="btn btn-primary btn-sm rounded-2" data-bs-dismiss="modal" onClick={()=>handleAddReview(product.productId,userInfo)}>Post review</button>
+                          <button class="custom-outline-btn px-3 me-1" onClick={()=>{setComment(""); handleRatings(0)}}>Clear</button>
+                          <button type="button" class="custom-btn" data-bs-dismiss="modal" onClick={()=>handleAddReview(product.productId,userInfo)}>Post review</button>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <p className='fw-normal fs-3'>Customer Reviews</p>
-                  <div className='overflow-auto bg-light p-3' style={{height:"12rem"}}>
+                  <div className='overflow-auto p-3' style={{height:"12rem"}}>
                     <div>
                       {
                         product.reviews.length>0?
@@ -214,7 +213,7 @@ const Homepage = ({products,setProducts,categories,selectedProductId,setSelected
                   </div>
                   {
                     userInfo!==null?
-                    <button className='btn btn-info fw-bold text-light rounded-2' data-bs-toggle="modal" data-bs-target="#exampleModal">+ Add product review</button>
+                    <button className='custom-btn' data-bs-toggle="modal" data-bs-target="#exampleModal">+ Add product review</button>
                     :<></>
                   }
                   

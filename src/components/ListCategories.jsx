@@ -60,7 +60,7 @@ const ListCategories = ({categories,loadCategories}) => {
             <div className="mb-1">
               <input type="text" className="form-control rounded-1" name="categoryDesc" placeholder='Enter Category Description' value={categoryDesc} onChange={(e)=>setCategoryDesc(e.target.value)} required/>
             </div>
-            <button type="submit" className="btn btn-primary rounded-1 p-2" style={{width:"100%"}}>Update Category</button>
+            <button type="submit" className="custom-btn" style={{width:"100%"}}>Update category</button>
           </form>           
         :
           <form className="mx-auto mb-5 p-4 shadow bg-light rounded-1" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddCategory(e,userInfo)}>
@@ -71,46 +71,38 @@ const ListCategories = ({categories,loadCategories}) => {
             <div className="mb-1">
               <input type="text" className="form-control rounded-1" name="categoryDesc" placeholder='Enter Category Description' value={categoryDesc} onChange={(e)=>setCategoryDesc(e.target.value)} required/>
             </div>
-            <button type="submit" className="btn btn-primary rounded-1 p-2" style={{width:"100%"}}>Add Category</button>
+            <button type="submit" className="custom-btn" style={{width:"100%"}}>Add category</button>
           </form>
       }
 
-      <div className="row mx-0">
-          <table className='table bg-light'>
-              <thead>
-                  <tr className='bg-light'>
-                      <th className="fs-6 fw-bold">Category Name</th>
-                      <th className="fs-6 fw-bold">Description</th>
-                      <th className="fs-6 fw-bold">Actions</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {
-                      categories.map((category,index)=>
+      <div className='row'>
+        {
+            categories.map((category,index)=>
+              <div className='col-md-3 col-sm-6 p-1'>
+                <div className='card shadow border-0' key={category.categoryId}>
+                  <div className="card-body" style={{height:"8rem"}}>
+                    <h5>{(index+1)+". "+category.categoryName}</h5>
+                    <p className="fs-6 fw-light">{category.categoryDesc}</p>
+                  </div>
+                  <div className="card-body d-flex justify-content-end">
+                    <button onClick={(e)=>{
+                          setEditing(true)
+                          setEditItemId(category.categoryId)
+                          setCategoryName(category.categoryName)
+                          setCategoryDesc(category.categoryDesc)
+                          loadCategories()
+                        }
+                      } className='custom-btn me-1'>Edit</button>
 
-                      <tr key={category.categoryId}>
-                          <th className="fs-6 fw-light">{(index+1)+". "+category.categoryName}</th>
-                          <th className="fs-6 fw-light">{category.categoryDesc}</th>
-                          <th>
-                            <button onClick={(e)=>{
-                                setEditing(true)
-                                setEditItemId(category.categoryId)
-                                setCategoryName(category.categoryName)
-                                setCategoryDesc(category.categoryDesc)
-                                loadCategories()
-                              }
-                            } className='btn btn-primary rounded-1 me-1'>Edit</button>
-
-                            <button onClick={(e)=>{
-                              handleDeleteCategory(category.categoryId,userInfo)
-                            }
-                          } className='btn btn-danger rounded-1'>Delete</button>
-                          </th>
-                      </tr>
-                      )
-                  }
-              </tbody>
-          </table>
+                      <button onClick={(e)=>{
+                        handleDeleteCategory(category.categoryId,userInfo)
+                      }
+                    } className='custom-btn'>Delete</button>
+                  </div>
+                </div>
+              </div>
+            )
+        }
       </div>
     </div>
   )

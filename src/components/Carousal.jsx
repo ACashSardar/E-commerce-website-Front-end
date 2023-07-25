@@ -10,10 +10,11 @@ const Carousal = () => {
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
             <div className="carousel-inner" >
-                <div className="carousel-item active" style={{height:"91vh"}}>
-                    <img src="https://blog.mktgessentials.com/hubfs/online-store-small-business-blog.png" className="d-block w-100" alt="..." style={{height:"91vh"}}/>
+                <div className="carousel-item active" style={{height:"93vh"}}>
+                    <img src="https://cdn.shopify.com/s/files/1/0126/3239/1744/collections/collection_banner-rtw_bb982a49-5b97-4a1b-a96a-784e65094681.jpg?v=1687870457" className="d-block w-100" alt="..." style={{height:"93vh"}}/>
                 </div>
             </div>
+            <button className='btn btn-light fw-bold fs-4' id="shop-now" onClick={() => window.location.replace("#products")}>SHOP NOW</button>
             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span className="visually-hidden">Previous</span>

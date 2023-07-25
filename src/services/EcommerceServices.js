@@ -186,10 +186,9 @@ export const getUsers = (userInfo) => {
   });
 };
 
-export const updateUser = (userId, data, userInfo) => {
+export const updateUser = (formData, userId, data, userInfo) => {
   console.log("put request made");
-  console.log(data);
-  return axios.put(USER_BASE_URL + "/" + userId, data, {
+  return axios.put(USER_BASE_URL + "/" + userId, formData, {
     auth: userInfo,
   });
 };

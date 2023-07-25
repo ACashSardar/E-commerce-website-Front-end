@@ -91,7 +91,7 @@ const ListSuppliers = ({suppliers,loadSuppliers }) => {
                 <div className="mb-1">
                     <input type="text" className="form-control rounded-1" name="supplierAddress" placeholder='Enter Supplier Address' value={supplierAddress} onChange={(e)=>setSupplierAddress(e.target.value)} required/>
                 </div>
-                <button type="submit" className="btn btn-primary rounded-1 p-2" style={{width:"100%"}}>Update Supplier</button>
+                <button type="submit" className="custom-btn" style={{width:"100%"}}>Update Supplier</button>
               </form>           
           :
               <form className="mx-auto mb-5 p-4 shadow bg-light rounded-1" style={{maxWidth:"25rem"}} onSubmit={(e)=>handleAddSupplier(e,userInfo)}>
@@ -108,54 +108,40 @@ const ListSuppliers = ({suppliers,loadSuppliers }) => {
                 <div className="mb-1">
                     <input type="text" className="form-control rounded-1" name="supplierAddress" placeholder='Enter Supplier Address' value={supplierAddress} onChange={(e)=>setSupplierAddress(e.target.value)} required/>
                 </div>
-                <button type="submit" className="btn btn-primary rounded-1 p-2" style={{width:"100%"}}>Add Supplier</button>
+                <button type="submit" className="custom-btn" style={{width:"100%"}}>Add Supplier</button>
               </form>
           }
 
-          <div className="row mx-0">
-              <table className='table table-hover bg-light shadow'>
-                  <thead>
-                      <tr className='bg-light'>
-                          <th className="fs-6 fw-bold">Supplier Name</th>
-                          <th className="fs-6 fw-bold">Phone Number</th>
-                          <th className="fs-6 fw-bold">Description</th>
-                          <th className="fs-6 fw-bold">Address</th>
-                          <th className="fs-6 fw-bold">Actions</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      {
-                          suppliers.map((supplier,index)=>
-
-                          <tr key={supplier.supplierId}>
-                              <th className="fs-6 fw-light">{(index+1)+". "+supplier.supplierName}</th>
-                              <th className="fs-6 fw-light">{supplier.phoneNo}</th>
-                              <th className="fs-6 fw-light">{supplier.description}</th>
-                              <th className="fs-6 fw-light">{supplier.supplierAddress}</th>
-                              <th>
-                              <button onClick={(e)=>{
-                                  setEditing(true)
-                                  setEditItemId(supplier.supplierId)
-                                  setSupplierName(supplier.supplierName)
-                                  setSupplierAddress(supplier.supplierAddress)
-                                  setPhoneNo(supplier.phoneNo)
-                                  setDescription(supplier.description)
-                                  loadSuppliers()
-                                  }
-                              } className='btn btn-primary rounded-1 me-1'>Edit</button>
-                              
-
-                              <button onClick={(e)=>{
-                                  handleDeleteSupplier(supplier.supplierId,userInfo)
+          <div className="row">
+            {
+              suppliers.map((supplier,index)=>
+                <div className='col-md-3 col-sm-6 p-1'>
+                  <div className='card shadow border-0' key={supplier.supplierId}>
+                    <div className="card-body" style={{height:"11rem"}}>
+                      <h5>{(index+1)+". "+supplier.supplierName}</h5>
+                      <p className="fs-6 fw-light"><i className='fa fa-phone'></i> {supplier.phoneNo}</p>
+                      <p className="fs-6 fw-light"><i className='fa fa-map-marker'></i> {supplier.supplierAddress}</p>
+                      <p className="fs-6 fw-light"><i className='fa fa-info-circle'></i> {supplier.description}</p>
+                    </div>
+                    <div className="card-body d-flex justify-content-end">
+                          <button onClick={(e)=>{
+                              setEditing(true)
+                              setEditItemId(supplier.supplierId)
+                              setSupplierName(supplier.supplierName)
+                              setSupplierAddress(supplier.supplierAddress)
+                              setPhoneNo(supplier.phoneNo)
+                              setDescription(supplier.description)
+                              loadSuppliers()
                               }
-                              } className='btn btn-danger rounded-1'>Delete</button>
-                              </th>
-                          </tr>
-                          )
-                      }
-                  </tbody>
-              </table>
-          </div>
+                          } className='custom-btn me-1'>Edit</button>
+                          <button onClick={(e)=>{handleDeleteSupplier(supplier.supplierId,userInfo)}} 
+                            className='custom-btn'>Delete</button>
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+      </div>
     </div>
   )
 }

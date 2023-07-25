@@ -23,7 +23,7 @@ const ListOrders = ({orders, loadOrders, userList,loading}) => {
     <div className='bg-canvas d-flex justify-content-center p-5'>
     {
         loading?
-        <div className='container-fluid text-center' style={{width:"100%"}} disabled>
+        <div className='text-light text-center' style={{width:"100%"}} disabled>
             Loading...
             <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         </div>
@@ -38,10 +38,10 @@ const ListOrders = ({orders, loadOrders, userList,loading}) => {
                             <div className='shadow bg-light rounded-1 p-4 mb-3'>
                                 <div className='row'>
                                     <div className='col-md-6'>
-                                        <h5 className='fw-bold'>Order ID: ECOD{order.orderId}</h5>
+                                        <b className='fs-5'>Order ID: ECOD{order.orderId}</b>
                                     </div>
                                     <div className='col-md-6 text-end'>
-                                        <h5 className='fw-bold' style={{color:"limegreen"}}>Paid: {order.totalAmount} ₹</h5>
+                                        <b className='fs-5'>Paid: ₹ {order.totalAmount}</b>
                                     </div>
                                 </div>
                                 <hr />
@@ -70,7 +70,7 @@ const ListOrders = ({orders, loadOrders, userList,loading}) => {
                                                     }
                                                     
                                                 </select>
-                                                <button className='btn btn-primary px-4 rounded-1'>Assign</button>
+                                                <button className='custom-btn px-4'>Save</button>
                                             </form>
                                         }
                                     </div>

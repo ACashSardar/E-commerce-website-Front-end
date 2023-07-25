@@ -8,7 +8,7 @@ body {
 }
 
 :root {
-  --main-accent-color: dodgerblue;
+  --main-accent-color: blueviolet;
   --secondary-accent-color: yellow;
 }
 
@@ -34,7 +34,7 @@ body {
 .bg-canvas {
   margin-top: 72px;
   min-height: 82vh;
-  background: dodgerblue;
+  background: var(--main-accent-color);
 }
 
 .selected-item {
@@ -66,4 +66,45 @@ body {
 
 .stars li:hover {
   color: yellow;
+}
+
+.custom-btn {
+  padding: 10px 15px;
+  color: white;
+  background: blueviolet;
+  border: 1px solid blueviolet;
+  border-radius: 5px;
+}
+
+.custom-btn:hover {
+  background: rgb(138, 43, 226, 0.8);
+  transition: all 0.3s ease;
+}
+
+.custom-outline-btn {
+  padding: 9px 15px;
+  color: blueviolet;
+  background: whitesmoke;
+  border: 1px solid blueviolet;
+  border-radius: 5px;
+}
+
+.custom-outline-btn:hover {
+  color: white;
+  background: rgb(138, 43, 226, 0.8);
+  transition: all 0.3s ease;
+}
+
+b {
+  color: var(--main-accent-color);
+}
+
+#shop-now {
+  position: absolute;
+  top: 64vh;
+  left: 21vw;
+  height: 76px;
+  width: 220px;
+  letter-spacing: 2px;
+  color: rgb(188, 162, 255);
 }

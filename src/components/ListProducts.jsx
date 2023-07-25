@@ -130,7 +130,7 @@ const ListProducts = ({products, loadProducts, categories, suppliers, loading, s
                     <img class="mb-1 rounded-1" src={BASE_URL+`/api/v1/products/image/${imageURL}`} alt="" style={{width:"11.2rem", height:"203px"}}/>
                   </div>
                 </div>
-                <button type="submit" className="btn btn-primary rounded-1 p-2" style={{width:"100%"}} >Update Product</button>
+                <button type="submit" className="custom-btn" style={{width:"100%"}} >Update product</button>
               </form>           
             :
               <form className="shadow bg-light p-5 mx-auto mb-5 rounded-1" style={{maxWidth:"40rem"}} onSubmit={(e)=>handleAddProduct(e,userInfo)}>
@@ -173,7 +173,7 @@ const ListProducts = ({products, loadProducts, categories, suppliers, loading, s
                     <img id="product-img" class="rounded-1" src={dummyImageURL} alt="" style={{width:"11.2rem", height:"203px"}} />
                   </div>
                 </div>
-                <button type="submit" className="btn btn-primary rounded-1 p-2" style={{width:"100%"}}>Add Product</button>
+                <button type="submit" className="custom-btn" style={{width:"100%"}}>Add product</button>
               </form>
           }
 
@@ -184,7 +184,7 @@ const ListProducts = ({products, loadProducts, categories, suppliers, loading, s
           </div>
         {
             loading?
-              <div className='text-center' disabled>
+              <div className='text-light text-center' disabled>
                   Loading...
                   <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               </div>
@@ -200,7 +200,7 @@ const ListProducts = ({products, loadProducts, categories, suppliers, loading, s
                       <p>{product.productDesc}</p>
                       <hr />
                         <label>Product ID: </label><b className='me-2'>ECPD{product.productId}, </b>
-                        <label>Price: </label><b className='me-2'>{product.price}₹,</b>
+                        <label>Price: </label><b className='me-2'>₹ {product.price},</b>
                         <label>In Stock: </label><b className='me-2'>{product.stock}</b>
                       <hr />
                       <div className='d-flex justify-content-end'>
@@ -216,7 +216,7 @@ const ListProducts = ({products, loadProducts, categories, suppliers, loading, s
                             setSupplierId(product.supId)
                             loadProducts()
                           }
-                        } className='btn btn-primary rounded-1 py-2 px-3 me-1 my-2'>
+                        } className='custom-btn px-4 me-1'>
                           Edit
                         </button>
                         
@@ -224,7 +224,7 @@ const ListProducts = ({products, loadProducts, categories, suppliers, loading, s
                             handleDeleteProduct(product.productId,userInfo)
                           }
                         }
-                        className='btn btn-danger rounded-1 my-2'>
+                        className='custom-btn'>
                           Delete
                         </button>
                       </div>

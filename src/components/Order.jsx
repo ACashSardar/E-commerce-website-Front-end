@@ -33,11 +33,13 @@ const Order = ({orders, loadOrders, currentUser,setCurrentOrder,loading,setLoadi
 
     const handleUpdateOrder=(orderId,e,userInfo)=>{
         e.preventDefault();
-        setLoading(true)
         const deliveryStatus=e.target.elements.deliveryStatus.value;
         const deliveryDate=e.target.elements.deliveryDate.value;
-
-        if(deliveryStatus==="" || deliveryDate==="") return ;
+        console.log(deliveryStatus);
+        if(deliveryStatus===""|| deliveryDate===""){
+            return ;
+        }
+        setLoading(true)
         const data={
             deliveryStatus:deliveryStatus,
             deliveryDate:deliveryDate
@@ -66,10 +68,10 @@ const Order = ({orders, loadOrders, currentUser,setCurrentOrder,loading,setLoadi
                         <div className='shadow bg-light rounded-1 p-4 mb-3'>
                             <div className='row'>
                                 <div className='col-md-6'>
-                                    <h5 className='fw-bold' style={{color:"dodgerblue"}}>Order ID: ECOD{order.orderId}</h5>
+                                    <b className='fs-5'>Order ID: ECOD{order.orderId}</b>
                                 </div>
                                 <div className='col-md-6 text-end'>
-                                    <h5 className='fw-bold' style={{color:"dodgerblue"}}>{order.totalAmount} ₹</h5>
+                                    <b className='fs-5'>₹ {order.totalAmount}</b>
                                 </div>
                             </div>
                             <hr />
@@ -99,15 +101,15 @@ const Order = ({orders, loadOrders, currentUser,setCurrentOrder,loading,setLoadi
                                                 :<h6>Shipping Address: {order.shippingAddress}</h6>
                                             }
                                             <form onSubmit={(e)=>handleSubmit(e,order.orderId,userInfo)} className="d-flex flex-row mb-1">
-                                                <input type="text" className='form-control rounded-1 me-1' name="shippingAddress" placeholder='Enter Shipping Address' style={{width:"15rem"}}/>
-                                                <button className='btn btn-primary rounded-1 border-primary px-3'>Update</button>
+                                                <input type="text" className='form-control border-secondary rounded-1 me-1' name="shippingAddress" placeholder='Enter Shipping Address' style={{width:"15rem"}}/>
+                                                <button className='custom-btn px-3'>Update</button>
                                             </form>
-                                            <button className='btn btn-danger rounded-1 me-1' onClick={()=>handleDeleteOrder(order.orderId,userInfo)} style={{width:"10rem"}}>Delete</button>
+                                            <button className='custom-outline-btn me-1' onClick={()=>handleDeleteOrder(order.orderId,userInfo)} style={{width:"10rem"}}>Delete</button>
                                             {
                                                 (order.shippingAddress===""||order.shippingAddress===null)?
                                                 <></>
                                                 :<Link to="/payment">
-                                                    <button className='btn btn-success rounded-1' onClick={()=>{setCurrentOrder(order)}} style={{width:"10rem"}}>Purchase Now</button>
+                                                    <button className='custom-btn' onClick={()=>{setCurrentOrder(order)}} style={{width:"10rem"}}>Purchase now</button>
                                                 </Link>
                                             }
                                         </div>
@@ -122,7 +124,7 @@ const Order = ({orders, loadOrders, currentUser,setCurrentOrder,loading,setLoadi
                                                         <option value="✅Delivered">Delivered</option>
                                                     </select>
                                                     <input className='form-control rounded-1 me-1' type="date" name="deliveryDate" required/>
-                                                    <button className='btn btn-primary rounded-1'>Update</button>
+                                                    <button className='custom-btn px-3'>Update</button>
                                                 </form>
                                                 :<></>
                                             }
