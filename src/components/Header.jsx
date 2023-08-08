@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Header = ({logout,currentUser}) => {
+const Header = ({logout,currentUser,cartItems}) => {
 
     const userInfo=JSON.parse(localStorage.getItem("userInfo"));
     const username=userInfo?userInfo.username:null;
@@ -23,15 +23,6 @@ const Header = ({logout,currentUser}) => {
                             <Link className="nav-link fw-normal fs-6 me-2" to="/">HOME</Link>
                         </li>
                         { 
-                            username!==null && currentUser.role==="ROLE_USER"?                       
-                            <li className="nav-item">
-                                <Link className="nav-link fw-normal fs-6 me-2" to="/cart">MY CART</Link>
-                            </li>
-                            :
-                            <></>
-                        }
-
-                        { 
                             
                             username!==null && (currentUser.role==="ROLE_USER"||currentUser.role==="ROLE_DELIVERY")?
 
@@ -50,7 +41,7 @@ const Header = ({logout,currentUser}) => {
                                     <label className="nav-link dropdown-toggle fs-6 me-2" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         MY TASKS
                                     </label>
-                                    <ul className="dropdown-menu rounded-0" aria-labelledby="navbarDropdown" style={{width: "200px"}}>
+                                    <ul className="dropdown-menu rounded-1" aria-labelledby="navbarDropdown" style={{width: "200px"}}>
                                         <li><Link className="nav-link text-decoration-none fs-6 mx-3 my-2" to="/product">PRODUCT</Link></li>
                                         <li><Link className="nav-link text-decoration-none fs-6 mx-3 my-2" to="/category">CATEGORY</Link></li>
                                         <li><Link className="nav-link text-decoration-none fs-6 mx-3 my-2" to="/supplier">SUPPLIER</Link></li>
@@ -74,16 +65,29 @@ const Header = ({logout,currentUser}) => {
                             </li>
                         </>
                         :
-                        <>
-                            <li className="nav-item">
-                                <label className="nav-link fw-normal fs-6 me-2" onClick={()=>logout()}>LOG OUT</label>
-                            </li>     
-                            <li className="nav-item">
-                                <Link className="nav-link fw-normal fs-6 me-2" to="/account">MY ACCOUNT</Link>
-                            </li>                     
+                        <>  
+                            <li className="nav-item dropdown">
+                                <label className="nav-link dropdown-toggle fs-6 me-2" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    MY ACCOUNT
+                                </label>
+                                <ul className="dropdown-menu rounded-1 me-2" aria-labelledby="navbarDropdown" style={{width: "200px"}}>
+                                    <li><Link className="nav-link text-decoration-none fs-6 mx-3 my-2" to="/account">VIEW ACCOUNT</Link></li>
+                                    <li><button className="btn  btn-danger rounded-1 fs-6 mx-3 my-2" style={{width:"165px"}} onClick={()=>logout()}>LOGOUT <i className='fa fa-sign-out'></i></button></li>
+                                </ul>
+                            </li>
                         </>
 
-                        }              
+                        }
+
+                        { 
+                            username!==null?                       
+                            <li className="nav-item">
+                                <Link className="nav-link fw-normal me-2" to="/cart"><i className='fa fa-shopping-cart fs-4'></i><span class="badge text-light rounded-5" style={{backgroundColor: 'blueviolet'}}>{cartItems.length}</span></Link>
+                            </li>
+                            :
+                            <></>
+                        }
+
                     </ul>
                 </div>
             </div>

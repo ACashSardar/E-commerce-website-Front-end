@@ -125,7 +125,7 @@ const Cart = ({cartItems, setCartItems, loadCartitems, loadOrders}) => {
                 </div>
             </div>
             :
-            <div className='text-center text-secondary'>
+            <div className='text-center text-light'>
                 <h5>Cart is currently empty.</h5>
             </div>
         }

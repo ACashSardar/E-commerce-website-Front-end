@@ -11,7 +11,7 @@ const Carousal = () => {
             </div>
             <div className="carousel-inner" >
                 <div className="carousel-item active" style={{height:"93vh"}}>
-                    <img src="https://cdn.shopify.com/s/files/1/0126/3239/1744/collections/collection_banner-rtw_bb982a49-5b97-4a1b-a96a-784e65094681.jpg?v=1687870457" className="d-block w-100" alt="..." style={{height:"93vh"}}/>
+                    <img src="https://d2pyicwmjx3wii.cloudfront.net/s/5fd0cc8564ed061d6f063d73/6482f25da79adb0839e2bb37/webp/cotton-lurex-2038x700.jpg" className="d-block w-100" alt="..." style={{height:"93vh"}}/>
                 </div>
             </div>
             <button className='btn btn-light fw-bold fs-4' id="shop-now" onClick={() => window.location.replace("#products")}>SHOP NOW</button>

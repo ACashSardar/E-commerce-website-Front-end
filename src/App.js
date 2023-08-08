@@ -58,10 +58,6 @@ const App = () => {
 
   const loadCategories = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (userInfo == null) {
-      // setCategories([]);
-      // return;
-    }
     getCategories(userInfo)
       .then((res) => {
         setCategories(res.data);
@@ -85,10 +81,6 @@ const App = () => {
   const loadProducts = () => {
     setLoading(true);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (userInfo == null) {
-      // setProducts([]);
-      // return;
-    }
     getProducts(userInfo)
       .then((res) => {
         setProducts(res.data);
@@ -252,7 +244,7 @@ const App = () => {
 
   return (
     <div className="container-fluid m-0 p-0">
-      <Header logout={logout} currentUser={currentUser} />
+      <Header logout={logout} currentUser={currentUser} cartItems={cartItems} />
       <Routes>
         <Route
           exact

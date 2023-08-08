@@ -101,10 +101,11 @@ b {
 
 #shop-now {
   position: absolute;
-  top: 64vh;
-  left: 21vw;
+  top: 62vh;
+  right: 15vw;
   height: 76px;
   width: 220px;
   letter-spacing: 2px;
-  color: rgb(188, 162, 255);
+  font-weight: bold;
+  color: chocolate;
 }

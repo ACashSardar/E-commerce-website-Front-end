@@ -145,7 +145,7 @@ const MainBody = ({products,setProducts,categories,setSelectedProductId,keyword,
                                 setSelectedProductId(product.productId);                        
                             }}>
                             <div className='card-body rounded-0 p-0'>
-                                <img src={BASE_URL+`/api/v1/products/image/${product.imageURL}`} className="card-img-top rounded-3" alt="..." style={{height:"15rem"}}/>
+                                <img src={BASE_URL+`/api/v1/products/image/${product.imageURL}`} className="card-img-top rounded-2" alt="..." style={{height:"15rem"}}/>
                             </div>
                             
                             <div className='card-body rounded-0' style={{height:"8rem"}}>
@@ -171,8 +171,8 @@ const MainBody = ({products,setProducts,categories,setSelectedProductId,keyword,
         <div className='d-flex justify-content-center my-4'>
             <nav aria-label="Page navigation example">
                 <ul class="pagination mb-0">
-                    <li class="page-item"><Link class="page-link rounded-2 me-1" href="" onClick={()=>handlePagination(startIndx-chunkSize)}><b>&laquo; Previous</b></Link></li>
-                    <li class="page-item"><Link class="page-link rounded-2" href="" onClick={()=>handlePagination(startIndx+chunkSize)}><b>Next &raquo;</b></Link></li>
+                    <li class="page-item"><Link class="page-link rounded-1 me-1" href="" onClick={()=>handlePagination(startIndx-chunkSize)}><b>&laquo; Previous</b></Link></li>
+                    <li class="page-item"><Link class="page-link rounded-1" href="" onClick={()=>handlePagination(startIndx+chunkSize)}><b>Next &raquo;</b></Link></li>
                 </ul>
             </nav>
         </div>
