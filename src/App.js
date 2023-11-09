@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import ListCategories from "./components/ListCategories";
 import {
@@ -244,7 +244,13 @@ const App = () => {
 
   return (
     <div className="container-fluid m-0 p-0">
-      <Header logout={logout} currentUser={currentUser} cartItems={cartItems} />
+      <Navbar
+        logout={logout}
+        currentUser={currentUser}
+        cartItems={cartItems}
+        handleSearch={handleSearch}
+        keyword={keyword}
+      />
       <Routes>
         <Route
           exact

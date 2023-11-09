@@ -2,33 +2,28 @@
 
 body {
   margin: 0;
-  font-family: Titillium Web;
+  font-family: Calibri;
   font-size: 14px;
   letter-spacing: 1px;
 }
 
 :root {
-  --main-accent-color: blueviolet;
+  --main-accent-color: lavender;
   --secondary-accent-color: yellow;
-}
-
-.brand-logo {
-  height: 3rem;
-  width: 3rem;
 }
 
 .nav-item a,
 .nav-link {
-  color: black;
+  color: white;
   letter-spacing: 1px;
 }
 
 .nav-link:hover {
   transition: all 0.1s ease;
-  color: var(--main-accent-color);
+  color: sandybrown;
   text-decoration: underline 5px;
   text-underline-position: under;
-  text-underline-offset: 25px;
+  text-underline-offset: 5px;
 }
 
 .bg-canvas {
@@ -68,44 +63,92 @@ body {
   color: yellow;
 }
 
-.custom-btn {
-  padding: 10px 15px;
-  color: white;
-  background: blueviolet;
-  border: 1px solid blueviolet;
-  border-radius: 5px;
+.custom-btn1,
+.custom-btn2,
+.custom-btn3 {
+  padding: 8px 30px;
+  color: black;
+  font-weight: bold;
+  box-shadow: 1px 1px 1px grey;
+  opacity: 0.9;
+}
+
+.custom-btn1:hover,
+.custom-btn2:hover,
+.custom-btn3:hover {
+  opacity: 1;
+  transform: scale(0.99);
+}
+
+.custom-btn1 {
+  border-radius: 20px;
+  background: orange;
+  border: 1px solid orange;
+}
+
+.custom-btn2 {
+  border-radius: 20px;
+  background: yellow;
+  border: 1px solid yellow;
+}
+
+.custom-btn3 {
+  background: linear-gradient(to top, white, lightgrey);
+  border: 1px solid gray;
 }
 
 .custom-btn:hover {
-  background: rgb(138, 43, 226, 0.8);
+  background: lightseagreen;
   transition: all 0.3s ease;
 }
 
 .custom-outline-btn {
   padding: 9px 15px;
-  color: blueviolet;
-  background: whitesmoke;
-  border: 1px solid blueviolet;
+  color: darkcyan;
+  background: white;
+  border: 1px solid darkcyan;
   border-radius: 5px;
 }
 
 .custom-outline-btn:hover {
-  color: white;
-  background: rgb(138, 43, 226, 0.8);
+  background: whitesmoke;
   transition: all 0.3s ease;
 }
 
-b {
-  color: var(--main-accent-color);
+.navbar {
+  background: #333;
+  padding: 0px 30px;
 }
 
-#shop-now {
-  position: absolute;
-  top: 62vh;
-  right: 15vw;
-  height: 76px;
-  width: 220px;
-  letter-spacing: 2px;
-  font-weight: bold;
-  color: chocolate;
+.brand-logo {
+  background: #333;
+  height: 2rem;
+}
+
+.search-bar {
+  padding: 7px 10px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border: 1px solid white;
+  outline: none;
+  width: 25rem;
+}
+
+.search-icon {
+  background: sandybrown;
+  padding: 12px 14px 13px 14px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+
+.user-avatar img {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 5px;
 }
