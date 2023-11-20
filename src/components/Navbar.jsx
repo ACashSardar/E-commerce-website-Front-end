@@ -10,7 +10,7 @@ const Navbar = ({ logout, currentUser, cartItems, handleSearch, keyword }) => {
   return (
     <header>
       <ToastContainer />
-      <nav className="navbar navbar-expand-lg fixed-top py-3 px-2">
+      <nav className="navbar navbar-expand-lg fixed-top p-2 mb-1">
         <div className="container-fluid">
           <img src="image/amazon_logo.png" alt="" className="brand-logo" />
           <button

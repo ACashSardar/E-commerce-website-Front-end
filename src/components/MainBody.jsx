@@ -37,25 +37,28 @@ const MainBody = ({
         .filter((item, index) => item.price >= low && item.price <= high);
       setProducts(temp);
       setCatId(catId);
+      if (catId === 0) {
+        document.getElementById("catg0").checked = true;
+      } else {
+        document.getElementById("catg0").checked = false;
+      }
       categories
         .map((catg) => catg.categoryId)
         .forEach((id) => {
+          console.log(id);
           if (id === catId) {
-            document.getElementById(id).style.backgroundColor = "sandybrown";
-            document.getElementById(id).style.color = "white";
+            document.getElementById("catg" + id).checked = true;
           } else {
-            document.getElementById(id).style.backgroundColor = "white";
-            document.getElementById(id).style.color = "black";
+            document.getElementById("catg" + id).checked = false;
           }
         });
-      priceRanges.forEach((price, index) => {
-        if (priceId === "price" + index) {
-          document.getElementById(priceId).style.backgroundColor = "sandybrown";
-          document.getElementById(priceId).style.color = "white";
+
+      priceRanges.forEach((price, id) => {
+        if (priceId === "price" + id) {
+          console.log(document.getElementById(priceId).checked);
+          document.getElementById("price" + id).checked = true;
         } else {
-          document.getElementById("price" + index).style.backgroundColor =
-            "white";
-          document.getElementById("price" + index).style.color = "black";
+          document.getElementById("price" + id).checked = false;
         }
       });
     });
@@ -72,25 +75,27 @@ const MainBody = ({
       setPriceId(priceId);
       setLow(low);
       setHigh(high);
-      priceRanges.forEach((price, index) => {
-        if (priceId === "price" + index) {
-          document.getElementById(priceId).style.backgroundColor = "sandybrown";
-          document.getElementById(priceId).style.color = "white";
+      if (priceId === "price-1") {
+        document.getElementById("price-1").checked = true;
+      } else {
+        document.getElementById("price-1").checked = false;
+      }
+
+      priceRanges.forEach((price, id) => {
+        if (priceId === "price" + id) {
+          document.getElementById("price" + id).checked = true;
         } else {
-          document.getElementById("price" + index).style.backgroundColor =
-            "white";
-          document.getElementById("price" + index).style.color = "black";
+          document.getElementById("price" + id).checked = false;
         }
       });
+
       categories
         .map((catg) => catg.categoryId)
         .forEach((id) => {
           if (id === catId) {
-            document.getElementById(id).style.backgroundColor = "sandybrown";
-            document.getElementById(id).style.color = "white";
+            document.getElementById("catg" + id).checked = true;
           } else {
-            document.getElementById(id).style.backgroundColor = "white";
-            document.getElementById(id).style.color = "black";
+            document.getElementById("catg" + id).checked = false;
           }
         });
     });
@@ -119,6 +124,8 @@ const MainBody = ({
     <div className="py-2 ps-5" id="products">
       <div className="row m-0">
         <div className="col-md-2 filters">
+          <h4 className="ms-5">Filters</h4>
+          <hr />
           <div className="overflow-auto mb-2" style={{ height: "12rem" }}>
             <div class="list-group me-1 rounded-0">
               <Link
@@ -126,36 +133,49 @@ const MainBody = ({
                 id={0}
                 onClick={() => searchByCategory(0)}
               >
+                <input type="checkbox" id={`catg${0}`} className="me-2" />
                 <b>All Categories</b>
               </Link>
               {categories.map((category, index) => (
                 <Link
                   className="list-group-item py-0 px-3 fs-6 fw-light border-0"
-                  id={category.categoryId}
                   onClick={() => searchByCategory(category.categoryId)}
                 >
-                  {index + 1}. {category.categoryName}
+                  <input
+                    type="checkbox"
+                    id={`catg${category.categoryId}`}
+                    className="me-2"
+                  />
+                  <label> {category.categoryName}</label>
                 </Link>
               ))}
             </div>
           </div>
+
           <div style={{ height: "12rem" }}>
             <div class="list-group me-1 rounded-0">
               <Link
                 className="list-group-item py-0 px-3 fs-6 border-0"
-                onClick={() => searchByPriceRange("price" + -1, 0, 50000)}
+                onClick={() => searchByPriceRange(`price${-1}`, 0, 50000)}
               >
+                <input type="checkbox" id={`price${-1}`} className="me-2" />
                 <b>Any Price Range</b>
               </Link>
               {priceRanges.map((price, index) => (
                 <Link
                   className="list-group-item py-0 px-3 fs-6 fw-light border-0"
-                  id={"price" + index}
                   onClick={() =>
-                    searchByPriceRange("price" + index, price[0], price[1])
+                    searchByPriceRange(`price${index}`, price[0], price[1])
                   }
                 >
-                  {index + 1}. ₹{price[0]} to {price[1]}
+                  <input
+                    type="checkbox"
+                    id={`price${index}`}
+                    className="me-2"
+                  />
+                  <label>
+                    ₹{price[0]} to {price[1]}
+                  </label>
                 </Link>
               ))}
             </div>

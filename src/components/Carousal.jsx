@@ -2,7 +2,7 @@ import React from "react";
 
 const Carousal = () => {
   return (
-    <div className="mt-4 pt-2 px-1 mb-0">
+    <div className="mt-3 px-1 mb-0">
       <div id="carouselExample" className="carousel slide">
         <div className="carousel-inner">
           <div className="carousel-item active">

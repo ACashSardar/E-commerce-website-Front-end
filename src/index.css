@@ -27,7 +27,7 @@ body {
 }
 
 .bg-canvas {
-  margin-top: 72px;
+  margin-top: 55px;
   min-height: 82vh;
   background: var(--main-accent-color);
 }
@@ -123,6 +123,7 @@ body {
 .brand-logo {
   background: #333;
   height: 2rem;
+  margin-top: 8px;
 }
 
 .search-bar {
@@ -151,4 +152,14 @@ body {
 p {
   margin-top: 0;
   margin-bottom: 5px;
+}
+
+footer {
+  background: rgb(20, 37, 36);
+}
+
+footer img {
+  width: 6rem;
+  height: 2rem;
+  margin: 5px;
 }
